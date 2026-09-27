@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CATA STORE - Türkiye'nin En Hızlı Satış Platformu</title>
+    <meta name="description" content="CATA STORE ile Robux siparişlerinizi anında ve güvenli şekilde tamamlayın. 7/24 otomatik teslimat, uygun fiyatlar ve Discord destek hattı.">
+    <meta property="og:title" content="CATA STORE - Türkiye'nin En Hızlı Satış Platformu">
+    <meta property="og:description" content="Anında ve güvenli Robux teslimatı. 7/24 aktif destek.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%2310b981'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0b0f19">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -162,7 +168,12 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center space-x-3">
-                <a id="discord-header-btn" href="https://discord.gg/FMn6XWWH7g" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 font-semibold text-sm transition-all duration-200 hover:scale-105">
+                <button onclick="openOrderLookupModal()" class="flex items-center space-x-2 px-3.5 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 font-semibold text-sm transition-all duration-200" title="Sipariş Sorgula">
+                    <i class="fas fa-magnifying-glass text-brand-400"></i>
+                    <span class="hidden md:inline">Sipariş Sorgula</span>
+                </button>
+
+                <a id="discord-header-btn" href="https://discord.gg/M2hAX9PFf8" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 font-semibold text-sm transition-all duration-200 hover:scale-105">
                     <i class="fab fa-discord text-lg text-indigo-400"></i>
                     <span class="hidden sm:inline">Discord Sunucusu</span>
                 </a>
@@ -456,7 +467,7 @@
                     <a href="#announcement-bar" class="hover:text-white transition">Anasayfa</a>
                     <a href="#calc-amount-input" class="hover:text-white transition">Hesaplayıcı</a>
                     <a href="#packages-grid" class="hover:text-white transition">Paketler</a>
-                    <a id="discord-footer-link" href="https://discord.gg/FMn6XWWH7g" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium">Discord Destek</a>
+                    <a id="discord-footer-link" href="https://discord.gg/M2hAX9PFf8" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium">Discord Destek</a>
                 </div>
 
                 <div>
@@ -555,7 +566,7 @@
                     </div>
                 </div>
 
-                <button onclick="submitOrderForm()" class="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition transform active:scale-95">
+                <button id="order-submit-btn" onclick="submitOrderForm()" class="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition transform active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed">
                     Siparişi Oluştur & Kodu Al
                 </button>
             </div>
@@ -615,7 +626,7 @@
 
                 <!-- Discord Button & Close -->
                 <div class="space-y-2 pt-1">
-                    <a id="order-discord-direct-btn" href="https://discord.gg/FMn6XWWH7g" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/30 transition">
+                    <a id="order-discord-direct-btn" href="https://discord.gg/M2hAX9PFf8" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/30 transition">
                         <i class="fab fa-discord text-lg"></i>
                         <span>Discord Sunucusuna Git & Dekont Gönder</span>
                     </a>
@@ -623,6 +634,34 @@
                         Pencereyi Kapat
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Sipariş Sorgulama -->
+    <div id="order-lookup-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card w-full max-w-sm rounded-3xl p-6 sm:p-8 border border-brand-500/30 shadow-2xl space-y-5">
+            <div class="text-center">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 p-0.5 mx-auto">
+                    <div class="w-full h-full bg-gray-950 rounded-[14px] flex items-center justify-center text-emerald-400 text-2xl">
+                        <i class="fas fa-magnifying-glass"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-white mt-3">Sipariş Sorgula</h3>
+                <p class="text-xs text-gray-400 mt-1">Sipariş kodunuzu girerek anlık durumu görüntüleyin.</p>
+            </div>
+
+            <div class="space-y-3">
+                <input type="text" id="order-lookup-input" placeholder="Örn: CATA-12345" maxlength="20" onkeydown="if(event.key==='Enter') lookupOrder()" class="w-full glass-input text-center text-sm font-bold tracking-widest px-4 py-3 rounded-xl focus:ring-2 focus:ring-brand-500 uppercase">
+
+                <div id="order-lookup-result" class="hidden rounded-xl border p-4 text-sm space-y-1"></div>
+
+                <button onclick="lookupOrder()" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm transition">
+                    Sorgula
+                </button>
+                <button onclick="closeOrderLookupModal()" class="w-full py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-sm transition">
+                    Kapat
+                </button>
             </div>
         </div>
     </div>
@@ -639,7 +678,6 @@
             <div>
                 <h3 class="text-xl font-bold text-white">Yönetici Girişi</h3>
                 <p class="text-xs text-gray-400 mt-1">Sistem ayarlarına erişmek için PIN kodunuzu girin.</p>
-                <p class="text-[11px] text-indigo-400 mt-1 font-semibold">(Varsayılan PIN: <span class="underline">8564</span>)</p>
             </div>
 
             <div class="space-y-4">
@@ -807,7 +845,7 @@
 
                         <div>
                             <label class="block text-xs font-bold text-gray-300 mb-1">Discord Davet Bağlantısı (URL)</label>
-                            <input type="url" id="adm-discord-url" value="https://discord.gg/FMn6XWWH7g" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
+                            <input type="url" id="adm-discord-url" value="https://discord.gg/M2hAX9PFf8" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
                         </div>
 
                         <div>
@@ -817,7 +855,7 @@
 
                         <div class="pt-4 border-t border-gray-800">
                             <label class="block text-xs font-bold text-amber-400 mb-1">Yönetici Giriş PIN Kodu</label>
-                            <input type="password" id="adm-pin-code" value="8564" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-bold tracking-widest max-w-xs">
+                            <input type="password" id="adm-pin-code" value="389854" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-bold tracking-widest max-w-xs">
                             <span class="text-[11px] text-gray-500 block mt-1">Giriş yaparken sorulan secret PIN şifrenizdir.</span>
                         </div>
                     </div>
@@ -910,10 +948,10 @@
     <script>
         // Default System Initial State
         const DEFAULT_CONFIG = {
-            adminPin: "8564",
+            adminPin: "389854",
             siteTitle: "CATA STORE",
             announcement: "🔥 Sınırlı Süreye Özel Fiyatlar! %10 Ekstra Robux Fırsatını Kaçırmayın! 🚀 Teslimatlar 7/24 Kesintisiz Devam Etmektedir.",
-            discordUrl: "https://discord.gg/FMn6XWWH7g",
+            discordUrl: "https://discord.gg/M2hAX9PFf8",
             paparaNo: "1234567890",
             paparaHolder: "CATA STORE",
             supportStatus: "7/24 Aktif Teslimat",
@@ -1194,15 +1232,74 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
+        // Discord Webhook - Yeni sipariş bildirimi (yalnızca sipariş oluşturulduğunda tetiklenir)
+        const ORDER_WEBHOOK_URL = "https://discord.com/api/webhooks/1553745817842487346/kayEKDookje0ROmt4WO7gXUqO_t8muWYKQDHUADpuoKlJ_F-c2FnsaKmT-X46G7ov1_u";
+
+        function sendOrderWebhook(order) {
+            if (!ORDER_WEBHOOK_URL) return;
+            const payload = {
+                username: "CATA STORE Sipariş Botu",
+                embeds: [{
+                    title: "🛒 Yeni Sipariş Alındı",
+                    color: 6366441,
+                    fields: [
+                        { name: "Sipariş Kodu", value: order.id, inline: true },
+                        { name: "Roblox Kullanıcı Adı", value: order.username, inline: true },
+                        { name: "Robux Miktarı", value: `${order.robux} R$`, inline: true },
+                        { name: "Tutar", value: `${order.price} ₺`, inline: true },
+                        { name: "Ödeme Yöntemi", value: order.paymentMethod, inline: true },
+                        { name: "Durum", value: order.status, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            fetch(ORDER_WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch((err) => {
+                console.error("Sipariş webhook bildirimi gönderilemedi:", err);
+            });
+        }
+
+        // Roblox kullanıcı adı kuralları: 3-20 karakter, harf/rakam/alt çizgi, baş/son alt çizgi olamaz
+        function isValidRobloxUsername(name) {
+            if (name.length < 3 || name.length > 20) return false;
+            if (!/^[A-Za-z0-9_]+$/.test(name)) return false;
+            if (name.startsWith('_') || name.endsWith('_')) return false;
+            if (name.includes('__')) return false;
+            return true;
+        }
+
+        let isSubmittingOrder = false;
+
         function submitOrderForm() {
+            if (isSubmittingOrder) return; // Çift gönderimi engelle
+
             const username = document.getElementById('order-username').value.trim();
             if (!username) {
                 showToast('Lütfen Roblox kullanıcı adınızı girin!', 'warning');
                 return;
             }
+            if (!isValidRobloxUsername(username)) {
+                showToast('Geçersiz Roblox kullanıcı adı! (3-20 karakter, sadece harf/rakam/_ kullanılabilir)', 'error');
+                return;
+            }
+            if (!selectedOrderPackage) {
+                showToast('Lütfen önce bir paket seçin!', 'warning');
+                return;
+            }
 
             const paymentRadio = document.querySelector('input[name="paymentMethod"]:checked');
             const paymentMethod = paymentRadio ? paymentRadio.value : 'Papara';
+
+            isSubmittingOrder = true;
+            const submitBtn = document.getElementById('order-submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'İşleniyor...';
+            }
 
             // Generate Order Code & Store
             const orderCode = 'CATA-' + Math.floor(10000 + Math.random() * 90000);
@@ -1224,6 +1321,7 @@
             state.orders.unshift(newOrder);
             saveStateToStorage();
             renderStorefront();
+            sendOrderWebhook(newOrder);
 
             // Display Step 2 Confirmation with Papara details
             document.getElementById('generated-order-code').innerText = orderCode;
@@ -1234,39 +1332,102 @@
             document.getElementById('order-form-step-2').classList.remove('hidden');
 
             showToast('Sipariş talebiniz oluşturuldu!', 'success');
+
+            // Bir sonraki sipariş için formu sıfırla
+            isSubmittingOrder = false;
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Siparişi Oluştur & Kodu Al';
+            }
+        }
+
+        // Modern clipboard yardımcı fonksiyonu (eski tarayıcılar için otomatik yedek yöntemle)
+        function copyToClipboard(text, successMessage) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showToast(successMessage, 'success'))
+                    .catch(() => legacyCopyFallback(text, successMessage));
+            } else {
+                legacyCopyFallback(text, successMessage);
+            }
+        }
+
+        function legacyCopyFallback(text, successMessage) {
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            temp.style.position = 'fixed';
+            temp.style.opacity = '0';
+            document.body.appendChild(temp);
+            temp.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMessage, 'success');
+            } catch (e) {
+                showToast('Kopyalama başarısız oldu, lütfen manuel kopyalayın.', 'error');
+            }
+            document.body.removeChild(temp);
         }
 
         function copyOrderCode() {
             const code = document.getElementById('generated-order-code').innerText;
-            const temp = document.createElement('textarea');
-            temp.value = code;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast('Sipariş kodu panoya kopyalandı!', 'info');
+            copyToClipboard(code, 'Sipariş kodu panoya kopyalandı!');
         }
 
         function copyPaparaNo() {
             const paparaNo = document.getElementById('order-modal-papara-no').innerText;
-            const temp = document.createElement('textarea');
-            temp.value = paparaNo;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast('Papara numarası panoya kopyalandı!', 'success');
+            copyToClipboard(paparaNo, 'Papara numarası panoya kopyalandı!');
         }
 
-        function copyOrderCode() {
-            const code = document.getElementById('generated-order-code').innerText;
-            const temp = document.createElement('textarea');
-            temp.value = code;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast('Sipariş kodu panoya kopyalandı!', 'info');
+        // Sipariş Sorgulama Modal Fonksiyonları
+        function openOrderLookupModal() {
+            const modal = document.getElementById('order-lookup-modal');
+            document.getElementById('order-lookup-input').value = '';
+            document.getElementById('order-lookup-result').classList.add('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeOrderLookupModal() {
+            const modal = document.getElementById('order-lookup-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function lookupOrder() {
+            const codeInput = document.getElementById('order-lookup-input').value.trim().toUpperCase();
+            const resultBox = document.getElementById('order-lookup-result');
+
+            if (!codeInput) {
+                showToast('Lütfen bir sipariş kodu girin!', 'warning');
+                return;
+            }
+
+            const order = (state.orders || []).find(o => o.id.toUpperCase() === codeInput);
+
+            if (!order) {
+                resultBox.className = 'rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm space-y-1 text-red-300';
+                resultBox.innerHTML = `<i class="fas fa-circle-xmark mr-1"></i> Bu koda ait bir sipariş bulunamadı.`;
+                resultBox.classList.remove('hidden');
+                return;
+            }
+
+            const statusColors = {
+                'Beklemede': 'text-amber-400',
+                'Onaylandı': 'text-blue-400',
+                'Tamamlandı': 'text-emerald-400',
+                'İptal Edildi': 'text-red-400'
+            };
+            const statusColor = statusColors[order.status] || 'text-gray-300';
+
+            resultBox.className = 'rounded-xl border border-gray-700 bg-gray-900/60 p-4 text-sm space-y-1.5 text-gray-200';
+            resultBox.innerHTML = `
+                <div class="flex justify-between"><span class="text-gray-400">Sipariş Kodu:</span><span class="font-bold">${order.id}</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Kullanıcı Adı:</span><span class="font-bold">${order.username}</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Miktar:</span><span class="font-bold">${order.robux} R$</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Tutar:</span><span class="font-bold">${order.price} ₺</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Durum:</span><span class="font-bold ${statusColor}">${order.status}</span></div>
+            `;
+            resultBox.classList.remove('hidden');
         }
 
         // Admin Auth Modal Functions
@@ -1288,7 +1449,7 @@
 
         function verifyAdminPin() {
             const inputPin = document.getElementById('admin-pin-input').value.trim();
-            const currentPin = state.adminPin || "8564";
+            const currentPin = state.adminPin || "389854";
 
             if (inputPin === currentPin) {
                 closeAdminAuthModal();
@@ -1352,7 +1513,7 @@
             document.getElementById('adm-papara-holder').value = state.paparaHolder || "EzWin Robux";
             document.getElementById('adm-discord-url').value = state.discordUrl;
             document.getElementById('adm-support-status').value = state.supportStatus;
-            document.getElementById('adm-pin-code').value = state.adminPin || "8564";
+            document.getElementById('adm-pin-code').value = state.adminPin || "389854";
         }
 
         // Package Editor inside Admin
@@ -1496,9 +1657,9 @@
             state.announcement = document.getElementById('adm-announcement').value.trim();
             state.paparaNo = document.getElementById('adm-papara-no').value.trim() || "1234567890";
             state.paparaHolder = document.getElementById('adm-papara-holder').value.trim() || "CATA STORE";
-            state.discordUrl = document.getElementById('adm-discord-url').value.trim() || "https://discord.gg/FMn6XWWH7g";
+            state.discordUrl = document.getElementById('adm-discord-url').value.trim() || "https://discord.gg/M2hAX9PFf8";
             state.supportStatus = document.getElementById('adm-support-status').value.trim();
-            state.adminPin = document.getElementById('adm-pin-code').value.trim() || "8564";
+            state.adminPin = document.getElementById('adm-pin-code').value.trim() || "389854";
 
             saveStateToStorage();
             renderStorefront();
