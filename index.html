@@ -34,6 +34,12 @@
                     animation: {
                         'pulse-glow': 'pulseGlow 2s infinite',
                         'marquee': 'marquee 25s linear infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out both',
+                        'fade-up': 'fadeUp 0.7s ease-out both',
+                        'float-slow': 'floatSlow 7s ease-in-out infinite',
+                        'float-slow-delay': 'floatSlow 7s ease-in-out infinite 2s',
+                        'gradient-move': 'gradientMove 6s ease infinite',
+                        'pop-in': 'popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both',
                     },
                     keyframes: {
                         pulseGlow: {
@@ -43,6 +49,26 @@
                         marquee: {
                             '0%': { transform: 'translateX(100%)' },
                             '100%': { transform: 'translateX(-100%)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(24px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+                            '50%': { transform: 'translateY(-18px) translateX(10px)' }
+                        },
+                        gradientMove: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
                         }
                     }
                 }
@@ -71,7 +97,7 @@
             transition: all 0.3s ease;
         }
         .glass-card-hover:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px) scale(1.015);
             border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.25);
         }
@@ -102,8 +128,32 @@
         }
         .text-gradient {
             background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #10b981 100%);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientMove 6s ease infinite;
+        }
+        /* Scroll-reveal: elemanlar görünür alana girince yumuşak beliriyor */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Kartların sırayla belirmesi için hafif gecikme kademeleri */
+        .reveal-up.delay-1 { transition-delay: 0.08s; }
+        .reveal-up.delay-2 { transition-delay: 0.16s; }
+        .reveal-up.delay-3 { transition-delay: 0.24s; }
+        .reveal-up.delay-4 { transition-delay: 0.32s; }
+        .reveal-up.delay-5 { transition-delay: 0.4s; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-up, .glass-card-hover, .text-gradient, * {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
         }
     </style>
 </head>
@@ -133,7 +183,7 @@
             <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-emerald-400 p-0.5 shadow-lg shadow-brand-500/20">
                     <div class="w-full h-full bg-gray-950 rounded-[10px] flex items-center justify-center">
-                        <i class="fas fa-cube text-xl text-emerald-400"></i>
+                        <i id="header-logo-icon" class="fas fa-cube text-xl text-emerald-400"></i>
                     </div>
                 </div>
                 <div>
@@ -193,44 +243,44 @@
         <!-- Hero Banner Section -->
         <section class="relative rounded-3xl overflow-hidden glass-card p-6 sm:p-10 border border-indigo-500/20">
             <!-- Background Radial Glow -->
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl pointer-events-none animate-float-slow"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-float-slow-delay"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left animate-fade-up">
                     <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-semibold">
                         <i class="fas fa-shield-halved"></i>
-                        <span>%100 Güvenli & Anında Gamepass Teslimatı</span>
+                        <span id="hero-badge-text">%100 Güvenli & Anında Gamepass Teslimatı</span>
                     </div>
 
                     <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
-                        En Uygun Fiyatlarla <br class="hidden sm:inline" />
-                        <span class="text-gradient">Robux Satın Alın</span>
+                        <span id="hero-title-line1">En Uygun Fiyatlarla</span> <br class="hidden sm:inline" />
+                        <span id="hero-title-line2" class="text-gradient">Robux Satın Alın</span>
                     </h1>
 
-                    <p class="text-gray-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                    <p id="hero-description" class="text-gray-300 text-sm sm:text-base max-w-2xl leading-relaxed">
                         Roblox hesabınıza en güvenli ve hızlı yöntemle Robux yükleyin. Gamepass sistemimiz ile ban riski olmadan dilediğiniz miktarda Robux saniyeler içinde sipariş edin.
                     </p>
 
                     <!-- Feature Badges Grid -->
                     <div class="grid grid-cols-3 gap-3 pt-2">
-                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center">
-                            <div class="text-indigo-400 font-bold text-lg sm:text-2xl">5-15 Dk</div>
-                            <div class="text-xs text-gray-400 mt-0.5">Ort. Teslimat</div>
+                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center animate-pop-in" style="animation-delay: 0.2s">
+                            <div id="hero-stat1-value" class="text-indigo-400 font-bold text-lg sm:text-2xl">5-15 Dk</div>
+                            <div id="hero-stat1-label" class="text-xs text-gray-400 mt-0.5">Ort. Teslimat</div>
                         </div>
-                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center">
-                            <div class="text-emerald-400 font-bold text-lg sm:text-2xl">+10,000</div>
-                            <div class="text-xs text-gray-400 mt-0.5">Başarılı Sipariş</div>
+                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center animate-pop-in" style="animation-delay: 0.3s">
+                            <div id="hero-stat2-value" class="text-emerald-400 font-bold text-lg sm:text-2xl">+10,000</div>
+                            <div id="hero-stat2-label" class="text-xs text-gray-400 mt-0.5">Başarılı Sipariş</div>
                         </div>
-                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center">
-                            <div class="text-amber-400 font-bold text-lg sm:text-2xl">7/24</div>
-                            <div class="text-xs text-gray-400 mt-0.5">Discord Destek</div>
+                        <div class="p-3 rounded-2xl bg-gray-900/60 border border-gray-800 text-center animate-pop-in" style="animation-delay: 0.4s">
+                            <div id="hero-stat3-value" class="text-amber-400 font-bold text-lg sm:text-2xl">7/24</div>
+                            <div id="hero-stat3-label" class="text-xs text-gray-400 mt-0.5">Discord Destek</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-5">
-                    <div class="bg-gray-900/90 rounded-2xl p-6 border border-gray-800 shadow-2xl relative overflow-hidden">
+                    <div class="bg-gray-900/90 rounded-2xl p-6 border border-gray-800 shadow-2xl relative overflow-hidden animate-fade-up" style="animation-delay: 0.15s">
                         <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-4">
                             <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Anlık Stok Bilgisi</span>
                             <span id="hero-stock-status-pill" class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
@@ -269,7 +319,7 @@
         </section>
 
         <!-- Interactive Robux Calculator Section -->
-        <section class="glass-card rounded-3xl p-6 sm:p-8 border border-indigo-500/20 space-y-6">
+        <section class="glass-card rounded-3xl p-6 sm:p-8 border border-indigo-500/20 space-y-6 reveal-up">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
                 <div>
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
@@ -350,7 +400,7 @@
                             <div class="text-xs text-gray-400">Toplam Ödenecek Tutar</div>
                             <div id="summary-total-price" class="text-3xl font-black text-white">160.00 TL</div>
                         </div>
-                        <button id="calc-buy-btn" onclick="initiateOrderFromCalculator()" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition transform hover:scale-105 active:scale-95 flex items-center space-x-2">
+                        <button id="calc-buy-btn" onclick="initiateOrderFromCalculator()" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition transform hover:scale-105 active:scale-95 flex items-center space-x-2 animate-pulse-glow">
                             <span>Satın Al</span>
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -360,7 +410,7 @@
         </section>
 
         <!-- Preset Packages Section -->
-        <section class="space-y-6">
+        <section class="space-y-6 reveal-up">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
@@ -378,7 +428,7 @@
         </section>
 
         <!-- How It Works Section -->
-        <section class="glass-card rounded-3xl p-6 sm:p-10 border border-gray-800 space-y-8">
+        <section class="glass-card rounded-3xl p-6 sm:p-10 border border-gray-800 space-y-8 reveal-up">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold text-white">Nasıl Robux Satın Alınır?</h2>
                 <p class="text-sm text-gray-400">3 kolay adımda Roblox hesabınıza Robux bakiyenizi güvenle aktarın.</p>
@@ -409,48 +459,29 @@
         </section>
 
         <!-- FAQ Accordion Section -->
-        <section class="space-y-6">
+        <section class="space-y-6 reveal-up">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <h2 class="text-2xl font-bold text-white">Sıkça Sorulan Sorular</h2>
                 <p class="text-xs sm:text-sm text-gray-400">Aklınıza takılan tüm soruların yanıtları burada.</p>
             </div>
 
             <div class="max-w-3xl mx-auto space-y-3" id="faq-accordion">
-                <!-- FAQ Item 1 -->
-                <div class="bg-gray-900/80 rounded-2xl border border-gray-800 overflow-hidden">
-                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left font-semibold text-white flex justify-between items-center hover:bg-gray-800/50 transition">
-                        <span>Robux teslimatı ne kadar sürer?</span>
-                        <i id="faq-icon-1" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
-                    </button>
-                    <div id="faq-ans-1" class="hidden px-6 pb-4 text-xs sm:text-sm text-gray-400 border-t border-gray-800/50 pt-3">
-                        Siparişiniz tamamlandıktan ve Gamepass onaylandıktan sonra Robux teslimatı ortalama 5-15 dakika içinde tamamlanır. Roblox politikaları gereği Gamepass Robux'ları hesabınıza "Pending Robux" (Bekleyen Robux) olarak yansır ve 3-5 gün içinde kullanılabilir bakiyeye geçer.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="bg-gray-900/80 rounded-2xl border border-gray-800 overflow-hidden">
-                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left font-semibold text-white flex justify-between items-center hover:bg-gray-800/50 transition">
-                        <span>Gamepass nasıl oluşturulur?</span>
-                        <i id="faq-icon-2" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
-                    </button>
-                    <div id="faq-ans-2" class="hidden px-6 pb-4 text-xs sm:text-sm text-gray-400 border-t border-gray-800/50 pt-3">
-                        Roblox Create (create.roblox.com) sayfasına gidip "Passes" bölümünden yeni bir pass oluşturun. Sipariş özetindeki miktar kadar fiyatlandırın ve satışı aktif (Item for Sale) hale getirin. Ardından linkini sipariş adımında iletin.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="bg-gray-900/80 rounded-2xl border border-gray-800 overflow-hidden">
-                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left font-semibold text-white flex justify-between items-center hover:bg-gray-800/50 transition">
-                        <span>Hesap şifremi vermem gerekiyor mu?</span>
-                        <i id="faq-icon-3" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
-                    </button>
-                    <div id="faq-ans-3" class="hidden px-6 pb-4 text-xs sm:text-sm text-gray-400 border-t border-gray-800/50 pt-3">
-                        <strong>Kesinlikle HAYIR!</strong> Sizden hiçbir şekilde Roblox hesap şifreniz istenmez. Tüm işlemler doğrudan sizlerin oluşturduğu Gamepass üzerinden güvenle gerçekleştirilir.
-                    </div>
-                </div>
+                <!-- FAQ items render dynamically from state.faqItems -->
             </div>
         </section>
     </main>
+
+    <!-- Site Maintenance Overlay -->
+    <div id="maintenance-overlay" class="hidden fixed inset-0 z-[60] bg-gray-950/98 backdrop-blur-md flex items-center justify-center p-6">
+        <div class="glass-card max-w-md w-full rounded-3xl p-8 border border-amber-500/30 text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto text-3xl">
+                <i class="fas fa-screwdriver-wrench"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white">Site Bakımda</h2>
+            <p id="maintenance-message-text" class="text-sm text-gray-400">Sitemiz şu anda bakımda. Kısa süre içinde tekrar hizmetinizdeyiz.</p>
+            <button onclick="openAdminAuthModal()" class="text-xs text-gray-500 hover:text-gray-300 underline">Yönetici Girişi</button>
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <footer class="bg-gray-950 border-t border-gray-800/80 pt-12 pb-8 mt-16">
@@ -458,7 +489,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-lg bg-brand-600 flex items-center justify-center text-white">
-                        <i class="fas fa-cube"></i>
+                        <i id="footer-logo-icon" class="fas fa-cube"></i>
                     </div>
                     <span id="footer-site-title" class="text-xl font-bold text-white">CATA STORE</span>
                 </div>
@@ -733,6 +764,10 @@
                     <i class="fas fa-gear w-5"></i>
                     <span>Site Ayarları</span>
                 </button>
+                <button onclick="switchAdminTab('content-mgmt')" id="tab-btn-content-mgmt" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-semibold text-sm text-left transition text-gray-400 hover:bg-gray-800 hover:text-white">
+                    <i class="fas fa-pen-to-square w-5"></i>
+                    <span>İçerik Yönetimi</span>
+                </button>
                 <button onclick="switchAdminTab('orders-log')" id="tab-btn-orders-log" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-semibold text-sm text-left transition text-gray-400 hover:bg-gray-800 hover:text-white">
                     <i class="fas fa-list-check w-5"></i>
                     <span>Sipariş Geçmişi</span>
@@ -800,6 +835,82 @@
                     </div>
                 </div>
 
+                <!-- TAB: Content Management (Hero, Stats, Logo, FAQ) -->
+                <div id="tab-content-mgmt" class="space-y-8 hidden">
+                    <div class="border-b border-gray-800 pb-4">
+                        <h3 class="text-xl font-bold text-white">İçerik Yönetimi</h3>
+                        <p class="text-xs text-gray-400">Ana sayfa metinlerini, logo ikonunu ve Sıkça Sorulan Sorular bölümünü tamamen özelleştirin.</p>
+                    </div>
+
+                    <!-- Logo -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Logo</h4>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Logo İkonu (Font Awesome sınıfı, örn: fa-cube, fa-gem, fa-bolt, fa-rocket)</label>
+                            <input type="text" id="adm-logo-icon" value="fa-cube" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium max-w-xs">
+                        </div>
+                    </div>
+
+                    <!-- Hero Section -->
+                    <div class="space-y-3 pt-4 border-t border-gray-800">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">Ana Banner (Hero) Bölümü</h4>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Üst Rozet Metni</label>
+                            <input type="text" id="adm-hero-badge" value="%100 Güvenli & Anında Gamepass Teslimatı" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">Başlık (1. Satır)</label>
+                                <input type="text" id="adm-hero-title-1" value="En Uygun Fiyatlarla" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">Başlık (Vurgulu Kısım)</label>
+                                <input type="text" id="adm-hero-title-2" value="Robux Satın Alın" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Açıklama Paragrafı</label>
+                            <textarea id="adm-hero-desc" rows="2" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">Roblox hesabınıza en güvenli ve hızlı yöntemle Robux yükleyin. Gamepass sistemimiz ile ban riski olmadan dilediğiniz miktarda Robux saniyeler içinde sipariş edin.</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Stat Badges -->
+                    <div class="space-y-3 pt-4 border-t border-gray-800">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide">İstatistik Kutuları (3 Adet)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-950/80 p-3 rounded-xl border border-gray-800 space-y-2">
+                                <input type="text" id="adm-stat1-value" value="5-15 Dk" placeholder="Değer" class="w-full glass-input px-3 py-2 rounded-lg text-sm font-bold text-center">
+                                <input type="text" id="adm-stat1-label" value="Ort. Teslimat" placeholder="Etiket" class="w-full glass-input px-3 py-2 rounded-lg text-xs text-center">
+                            </div>
+                            <div class="bg-gray-950/80 p-3 rounded-xl border border-gray-800 space-y-2">
+                                <input type="text" id="adm-stat2-value" value="+10,000" placeholder="Değer" class="w-full glass-input px-3 py-2 rounded-lg text-sm font-bold text-center">
+                                <input type="text" id="adm-stat2-label" value="Başarılı Sipariş" placeholder="Etiket" class="w-full glass-input px-3 py-2 rounded-lg text-xs text-center">
+                            </div>
+                            <div class="bg-gray-950/80 p-3 rounded-xl border border-gray-800 space-y-2">
+                                <input type="text" id="adm-stat3-value" value="7/24" placeholder="Değer" class="w-full glass-input px-3 py-2 rounded-lg text-sm font-bold text-center">
+                                <input type="text" id="adm-stat3-label" value="Discord Destek" placeholder="Etiket" class="w-full glass-input px-3 py-2 rounded-lg text-xs text-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Management -->
+                    <div class="space-y-4 pt-4 border-t border-gray-800">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-sm font-bold text-white uppercase tracking-wide">Sıkça Sorulan Sorular</h4>
+                                <p class="text-xs text-gray-400">Soruları ekleyin, düzenleyin veya silin.</p>
+                            </div>
+                            <button onclick="addNewAdminFaq()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1">
+                                <i class="fas fa-plus"></i>
+                                <span>Yeni Soru Ekle</span>
+                            </button>
+                        </div>
+                        <div id="adm-faq-list" class="space-y-3">
+                            <!-- FAQ Editor Cards will render dynamically -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- TAB 2: Site Settings -->
                 <div id="tab-site-settings" class="space-y-6 hidden">
                     <div class="border-b border-gray-800 pb-4">
@@ -829,21 +940,6 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Üst Duyuru Bandı Metni</label>
-                            <input type="text" id="adm-announcement" value="🔥 Sınırlı Süreye Özel Fiyatlar! %10 Ekstra Robux Fırsatını Kaçırmayın! 🚀 Teslimatlar 7/24 Kesintisiz Devam Etmektedir." class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Papara Numarası</label>
-                            <input type="text" id="adm-papara-no" value="1234567890" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-bold">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 mb-1">Papara Hesabı Sahibi (Ad Soyad)</label>
-                            <input type="text" id="adm-papara-holder" value="EzWin Robux" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
-                        </div>
-
-                        <div>
                             <label class="block text-xs font-bold text-gray-300 mb-1">Discord Davet Bağlantısı (URL)</label>
                             <input type="url" id="adm-discord-url" value="https://discord.gg/M2hAX9PFf8" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
                         </div>
@@ -855,8 +951,25 @@
 
                         <div class="pt-4 border-t border-gray-800">
                             <label class="block text-xs font-bold text-amber-400 mb-1">Yönetici Giriş PIN Kodu</label>
-                            <input type="password" id="adm-pin-code" value="389854" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-bold tracking-widest max-w-xs">
+                            <input type="password" id="adm-pin-code" value="8564" class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-bold tracking-widest max-w-xs">
                             <span class="text-[11px] text-gray-500 block mt-1">Giriş yaparken sorulan secret PIN şifrenizdir.</span>
+                        </div>
+
+                        <div class="pt-4 border-t border-gray-800 space-y-3">
+                            <div class="flex items-center justify-between bg-gray-950/80 p-4 rounded-xl border border-gray-800">
+                                <div>
+                                    <label class="block text-sm font-bold text-white">Bakım Modu</label>
+                                    <span class="text-xs text-gray-400">Aktif edildiğinde sipariş oluşturma kapatılır ve ziyaretçilere bakım mesajı gösterilir.</span>
+                                </div>
+                                <select id="adm-maintenance-mode" class="glass-input px-4 py-2 rounded-xl text-sm font-bold">
+                                    <option value="false">Kapalı (Site Aktif)</option>
+                                    <option value="true">Açık (Bakımda)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">Bakım Modu Mesajı</label>
+                                <input type="text" id="adm-maintenance-message" value="Sitemiz şu anda bakımda. Kısa süre içinde tekrar hizmetinizdeyiz." class="w-full glass-input px-4 py-2.5 rounded-xl text-sm font-medium">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -948,7 +1061,7 @@
     <script>
         // Default System Initial State
         const DEFAULT_CONFIG = {
-            adminPin: "389854",
+            adminPin: "8564",
             siteTitle: "CATA STORE",
             announcement: "🔥 Sınırlı Süreye Özel Fiyatlar! %10 Ekstra Robux Fırsatını Kaçırmayın! 🚀 Teslimatlar 7/24 Kesintisiz Devam Etmektedir.",
             discordUrl: "https://discord.gg/M2hAX9PFf8",
@@ -958,6 +1071,21 @@
             isStockAvailable: true,
             totalStock: 75000,
             ratePer1000: 160.00, // 160 TL per 1000 Robux
+            maintenanceMode: false,
+            maintenanceMessage: "Sitemiz şu anda bakımda. Kısa süre içinde tekrar hizmetinizdeyiz.",
+            logoIcon: "fa-cube",
+            heroBadge: "%100 Güvenli & Anında Gamepass Teslimatı",
+            heroTitleLine1: "En Uygun Fiyatlarla",
+            heroTitleLine2: "Robux Satın Alın",
+            heroDescription: "Roblox hesabınıza en güvenli ve hızlı yöntemle Robux yükleyin. Gamepass sistemimiz ile ban riski olmadan dilediğiniz miktarda Robux saniyeler içinde sipariş edin.",
+            stat1Value: "5-15 Dk", stat1Label: "Ort. Teslimat",
+            stat2Value: "+10,000", stat2Label: "Başarılı Sipariş",
+            stat3Value: "7/24", stat3Label: "Discord Destek",
+            faqItems: [
+                { id: 'faq-1', q: 'Robux teslimatı ne kadar sürer?', a: 'Siparişiniz tamamlandıktan ve Gamepass onaylandıktan sonra Robux teslimatı ortalama 5-15 dakika içinde tamamlanır. Roblox politikaları gereği Gamepass Robux\'ları hesabınıza "Pending Robux" (Bekleyen Robux) olarak yansır ve 3-5 gün içinde kullanılabilir bakiyeye geçer.' },
+                { id: 'faq-2', q: 'Gamepass nasıl oluşturulur?', a: 'Roblox Create (create.roblox.com) sayfasına gidip "Passes" bölümünden yeni bir pass oluşturun. Sipariş özetindeki miktar kadar fiyatlandırın ve satışı aktif (Item for Sale) hale getirin. Ardından linkini sipariş adımında iletin.' },
+                { id: 'faq-3', q: 'Hesap şifremi vermem gerekiyor mu?', a: 'Kesinlikle HAYIR! Sizden hiçbir şekilde Roblox hesap şifreniz istenmez. Tüm işlemler doğrudan sizlerin oluşturduğu Gamepass üzerinden güvenle gerçekleştirilir.' }
+            ],
             packages: [
                 { id: 'pkg-1', amount: 400, price: 64, originalPrice: 80, badge: 'Başlangıç', popular: false, inStock: true },
                 { id: 'pkg-2', amount: 800, price: 128, originalPrice: 160, badge: 'Çok Satan', popular: true, inStock: true },
@@ -1031,6 +1159,45 @@
             document.getElementById('discord-footer-link').href = state.discordUrl;
             document.getElementById('order-discord-direct-btn').href = state.discordUrl;
 
+            // Logo icon
+            const headerLogoIcon = document.getElementById('header-logo-icon');
+            const footerLogoIcon = document.getElementById('footer-logo-icon');
+            const logoIconClass = state.logoIcon || 'fa-cube';
+            if (headerLogoIcon) headerLogoIcon.className = `fas ${logoIconClass} text-xl text-emerald-400`;
+            if (footerLogoIcon) footerLogoIcon.className = `fas ${logoIconClass}`;
+
+            // Hero content
+            const heroBadgeEl = document.getElementById('hero-badge-text');
+            if (heroBadgeEl) heroBadgeEl.innerText = state.heroBadge;
+            const heroTitle1El = document.getElementById('hero-title-line1');
+            if (heroTitle1El) heroTitle1El.innerText = state.heroTitleLine1;
+            const heroTitle2El = document.getElementById('hero-title-line2');
+            if (heroTitle2El) heroTitle2El.innerText = state.heroTitleLine2;
+            const heroDescEl = document.getElementById('hero-description');
+            if (heroDescEl) heroDescEl.innerText = state.heroDescription;
+
+            // Stat badges
+            const statMap = [
+                ['hero-stat1-value', state.stat1Value], ['hero-stat1-label', state.stat1Label],
+                ['hero-stat2-value', state.stat2Value], ['hero-stat2-label', state.stat2Label],
+                ['hero-stat3-value', state.stat3Value], ['hero-stat3-label', state.stat3Label]
+            ];
+            statMap.forEach(([id, val]) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = val;
+            });
+
+            // FAQ Accordion
+            renderFaqAccordion();
+
+            // Maintenance overlay
+            const maintenanceOverlay = document.getElementById('maintenance-overlay');
+            const maintenanceMsgEl = document.getElementById('maintenance-message-text');
+            if (maintenanceMsgEl) maintenanceMsgEl.innerText = state.maintenanceMessage;
+            if (maintenanceOverlay) {
+                maintenanceOverlay.classList.toggle('hidden', !state.maintenanceMode);
+            }
+
             // Stock & Status Updates
             const totalStockFormatted = Number(state.totalStock).toLocaleString('tr-TR');
             document.getElementById('nav-stock-amount').innerText = `${totalStockFormatted} R$`;
@@ -1085,12 +1252,13 @@
 
             const packagesList = Array.isArray(state.packages) ? state.packages : [];
 
-            packagesList.forEach(pkg => {
+            packagesList.forEach((pkg, idx) => {
                 const isOutOfStock = !state.isStockAvailable || !pkg.inStock || pkg.amount > state.totalStock;
                 const savingsPct = pkg.originalPrice > pkg.price ? Math.round(((pkg.originalPrice - pkg.price) / pkg.originalPrice) * 100) : 0;
+                const staggerDelay = (idx % 6) * 0.08;
 
                 const cardHtml = `
-                    <div class="glass-card glass-card-hover rounded-2xl p-5 border ${pkg.popular ? 'border-brand-500/60 shadow-lg shadow-brand-500/10' : 'border-gray-800'} flex flex-col justify-between relative overflow-hidden">
+                    <div class="glass-card glass-card-hover rounded-2xl p-5 border ${pkg.popular ? 'border-brand-500/60 shadow-lg shadow-brand-500/10' : 'border-gray-800'} flex flex-col justify-between relative overflow-hidden animate-fade-up" style="animation-delay: ${staggerDelay}s">
                         ${pkg.popular ? `<div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl shadow"><i class="fas fa-fire mr-1"></i> Popüler</div>` : ''}
 
                         <div>
@@ -1174,7 +1342,7 @@
                 calcBuyBtn.className = "px-6 py-3.5 rounded-xl bg-gray-800 text-gray-500 font-bold text-sm cursor-not-allowed flex items-center space-x-2";
             } else {
                 calcBuyBtn.disabled = false;
-                calcBuyBtn.className = "px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition transform hover:scale-105 active:scale-95 flex items-center space-x-2";
+                calcBuyBtn.className = "px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition transform hover:scale-105 active:scale-95 flex items-center space-x-2 animate-pulse-glow";
             }
         }
 
@@ -1276,6 +1444,11 @@
 
         function submitOrderForm() {
             if (isSubmittingOrder) return; // Çift gönderimi engelle
+
+            if (state.maintenanceMode) {
+                showToast('Site şu anda bakımda, sipariş oluşturulamıyor.', 'warning');
+                return;
+            }
 
             const username = document.getElementById('order-username').value.trim();
             if (!username) {
@@ -1449,7 +1622,7 @@
 
         function verifyAdminPin() {
             const inputPin = document.getElementById('admin-pin-input').value.trim();
-            const currentPin = state.adminPin || "389854";
+            const currentPin = state.adminPin || "8564";
 
             if (inputPin === currentPin) {
                 closeAdminAuthModal();
@@ -1484,7 +1657,7 @@
         }
 
         function switchAdminTab(tabName) {
-            const tabs = ['stock-pricing', 'site-settings', 'orders-log', 'reset-data'];
+            const tabs = ['stock-pricing', 'site-settings', 'content-mgmt', 'orders-log', 'reset-data'];
             tabs.forEach(t => {
                 const content = document.getElementById(`tab-${t}`);
                 const btn = document.getElementById(`tab-btn-${t}`);
@@ -1499,6 +1672,7 @@
 
             if (tabName === 'orders-log') renderAdminOrdersTable();
             if (tabName === 'stock-pricing') renderAdminPackagesEditor();
+            if (tabName === 'content-mgmt') renderAdminFaqEditor();
         }
 
         // Populate Admin Form Inputs from active state
@@ -1513,7 +1687,21 @@
             document.getElementById('adm-papara-holder').value = state.paparaHolder || "EzWin Robux";
             document.getElementById('adm-discord-url').value = state.discordUrl;
             document.getElementById('adm-support-status').value = state.supportStatus;
-            document.getElementById('adm-pin-code').value = state.adminPin || "389854";
+            document.getElementById('adm-pin-code').value = state.adminPin || "8564";
+            document.getElementById('adm-maintenance-mode').value = state.maintenanceMode ? "true" : "false";
+            document.getElementById('adm-maintenance-message').value = state.maintenanceMessage || "";
+
+            document.getElementById('adm-logo-icon').value = state.logoIcon || "fa-cube";
+            document.getElementById('adm-hero-badge').value = state.heroBadge || "";
+            document.getElementById('adm-hero-title-1').value = state.heroTitleLine1 || "";
+            document.getElementById('adm-hero-title-2').value = state.heroTitleLine2 || "";
+            document.getElementById('adm-hero-desc').value = state.heroDescription || "";
+            document.getElementById('adm-stat1-value').value = state.stat1Value || "";
+            document.getElementById('adm-stat1-label').value = state.stat1Label || "";
+            document.getElementById('adm-stat2-value').value = state.stat2Value || "";
+            document.getElementById('adm-stat2-label').value = state.stat2Label || "";
+            document.getElementById('adm-stat3-value').value = state.stat3Value || "";
+            document.getElementById('adm-stat3-label').value = state.stat3Label || "";
         }
 
         // Package Editor inside Admin
@@ -1590,6 +1778,84 @@
             showToast('Paket kaldırıldı.', 'warning');
         }
 
+        // FAQ Editor inside Admin
+        function renderAdminFaqEditor() {
+            const container = document.getElementById('adm-faq-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const faqList = Array.isArray(state.faqItems) ? state.faqItems : [];
+
+            faqList.forEach((faq) => {
+                const itemHtml = `
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <div class="flex items-start gap-3">
+                            <div class="flex-grow space-y-2">
+                                <div>
+                                    <label class="block text-[10px] text-gray-400">Soru</label>
+                                    <input type="text" value="${faq.q.replace(/"/g, '&quot;')}" onchange="updateAdminFaqField('${faq.id}', 'q', this.value)" class="w-full glass-input px-3 py-1.5 rounded-lg text-sm font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-400">Cevap</label>
+                                    <textarea rows="2" onchange="updateAdminFaqField('${faq.id}', 'a', this.value)" class="w-full glass-input px-3 py-1.5 rounded-lg text-xs">${faq.a}</textarea>
+                                </div>
+                            </div>
+                            <button onclick="deleteAdminFaq('${faq.id}')" class="p-2 rounded-lg bg-red-900/40 text-red-400 hover:bg-red-900/80 transition shrink-0" title="Soruyu Sil">
+                                <i class="fas fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
+        function updateAdminFaqField(id, key, val) {
+            const faqList = Array.isArray(state.faqItems) ? state.faqItems : [];
+            const faq = faqList.find(f => f.id === id);
+            if (faq) faq[key] = val;
+        }
+
+        function addNewAdminFaq() {
+            const newId = 'faq-' + Date.now();
+            if (!Array.isArray(state.faqItems)) state.faqItems = [];
+            state.faqItems.push({ id: newId, q: 'Yeni Soru Başlığı', a: 'Bu sorunun cevabını buraya yazın.' });
+            renderAdminFaqEditor();
+            showToast('Yeni soru eklendi!', 'info');
+        }
+
+        function deleteAdminFaq(id) {
+            if (Array.isArray(state.faqItems)) {
+                state.faqItems = state.faqItems.filter(f => f.id !== id);
+            }
+            renderAdminFaqEditor();
+            showToast('Soru kaldırıldı.', 'warning');
+        }
+
+        // Render FAQ Accordion on the public storefront
+        function renderFaqAccordion() {
+            const container = document.getElementById('faq-accordion');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const faqList = Array.isArray(state.faqItems) ? state.faqItems : [];
+
+            faqList.forEach((faq) => {
+                const itemHtml = `
+                    <div class="bg-gray-900/80 rounded-2xl border border-gray-800 overflow-hidden">
+                        <button onclick="toggleFaq('${faq.id}')" class="w-full px-6 py-4 text-left font-semibold text-white flex justify-between items-center hover:bg-gray-800/50 transition">
+                            <span>${faq.q}</span>
+                            <i id="faq-icon-${faq.id}" class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div id="faq-ans-${faq.id}" class="hidden px-6 pb-4 text-xs sm:text-sm text-gray-400 border-t border-gray-800/50 pt-3">
+                            ${faq.a}
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
         // Admin Orders Table
         function renderAdminOrdersTable() {
             const tbody = document.getElementById('adm-orders-tbody');
@@ -1659,7 +1925,21 @@
             state.paparaHolder = document.getElementById('adm-papara-holder').value.trim() || "CATA STORE";
             state.discordUrl = document.getElementById('adm-discord-url').value.trim() || "https://discord.gg/M2hAX9PFf8";
             state.supportStatus = document.getElementById('adm-support-status').value.trim();
-            state.adminPin = document.getElementById('adm-pin-code').value.trim() || "389854";
+            state.adminPin = document.getElementById('adm-pin-code').value.trim() || "8564";
+            state.maintenanceMode = document.getElementById('adm-maintenance-mode').value === "true";
+            state.maintenanceMessage = document.getElementById('adm-maintenance-message').value.trim() || DEFAULT_CONFIG.maintenanceMessage;
+
+            state.logoIcon = document.getElementById('adm-logo-icon').value.trim() || "fa-cube";
+            state.heroBadge = document.getElementById('adm-hero-badge').value.trim();
+            state.heroTitleLine1 = document.getElementById('adm-hero-title-1').value.trim();
+            state.heroTitleLine2 = document.getElementById('adm-hero-title-2').value.trim();
+            state.heroDescription = document.getElementById('adm-hero-desc').value.trim();
+            state.stat1Value = document.getElementById('adm-stat1-value').value.trim();
+            state.stat1Label = document.getElementById('adm-stat1-label').value.trim();
+            state.stat2Value = document.getElementById('adm-stat2-value').value.trim();
+            state.stat2Label = document.getElementById('adm-stat2-label').value.trim();
+            state.stat3Value = document.getElementById('adm-stat3-value').value.trim();
+            state.stat3Label = document.getElementById('adm-stat3-label').value.trim();
 
             saveStateToStorage();
             renderStorefront();
@@ -1748,6 +2028,9 @@
             if (!Array.isArray(state.orders)) {
                 state.orders = JSON.parse(JSON.stringify(DEFAULT_CONFIG.orders));
             }
+            if (!Array.isArray(state.faqItems)) {
+                state.faqItems = JSON.parse(JSON.stringify(DEFAULT_CONFIG.faqItems));
+            }
             if (!state.adminPin) {
                 state.adminPin = DEFAULT_CONFIG.adminPin;
             }
@@ -1800,9 +2083,28 @@
             }, 3500);
         }
 
+        // Scroll ile beliren bölümler için gözlemci (Intersection Observer)
+        function initScrollReveal() {
+            const revealEls = document.querySelectorAll('.reveal-up');
+            if (!('IntersectionObserver' in window)) {
+                revealEls.forEach(el => el.classList.add('is-visible'));
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealEls.forEach(el => observer.observe(el));
+        }
+
         // Application Startup
         window.onload = function() {
             loadState();
+            initScrollReveal();
         };
     </script>
 </body>
