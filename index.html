@@ -104,11 +104,11 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <h3 class="font-bold text-center">Sipariş Sorgula</h3><input id="lc" class="i text-center uppercase" placeholder="CATA-12345" onkeydown="if(event.key==='Enter')lookup()">
 <div id="lr" class="text-sm"></div><button class="b w-full" onclick="lookup()">Sorgula</button><button class="b w-full !bg-gray-800" onclick="hide('lk')">Kapat</button></div></div>
 
-<div id="au" class="hid fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"><div class="g w-full max-w-xs rounded-2xl p-5 space-y-3 text-center">
+<div id="au" class="hid fixed inset-0 z-[80] bg-black/80 flex items-center justify-center p-4"><div class="g w-full max-w-xs rounded-2xl p-5 space-y-3 text-center">
 <h3 class="font-bold">Yönetici Girişi</h3><input id="pin" type="password" class="i text-center text-xl tracking-widest" onkeydown="if(event.key==='Enter')login()">
 <button class="b w-full" onclick="login()">Giriş</button><button class="text-xs text-gray-500" onclick="hide('au')">İptal</button></div></div>
 
-<div id="ad" class="hid fixed inset-0 z-50 bg-gray-950 overflow-y-auto"><div class="max-w-4xl mx-auto p-4 space-y-6">
+<div id="ad" class="hid fixed inset-0 z-[80] bg-gray-950 overflow-y-auto"><div class="max-w-4xl mx-auto p-4 space-y-6">
 <div class="flex justify-between items-center sticky top-0 bg-gray-950 py-2 z-10"><h2 class="font-bold text-lg">Yönetim Paneli</h2><div class="flex gap-2"><button class="b !bg-emerald-600" onclick="saveAdmin()">💾 Kaydet</button><button class="b !bg-gray-800" onclick="hide('ad')">Çıkış</button></div></div>
 <div id="a-warn" class="hid bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs rounded-xl p-3">⚠ Sunucu bağlı değil: panel bu tarayıcıda çalışıyor, değişiklikler <b>sadece bu cihazda</b> saklanır. Herkesin aynı siteyi görmesi için Node sunucusunu (server.js) çalıştırın.</div>
 <div class="grid sm:grid-cols-2 gap-3 text-xs">
@@ -124,7 +124,7 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div><div class="flex justify-between mb-2"><b class="text-sm">Siparişler</b><button class="b !bg-red-800" onclick="clearOrders()">Tümünü Sil</button></div>
 <div class="overflow-x-auto"><table class="w-full text-xs text-left"><tbody id="a-od" class="divide-y divide-gray-800"></tbody></table></div></div></div></div>
 
-<div id="tc" class="fixed bottom-5 right-5 z-[70] space-y-2"></div>
+<div id="tc" class="fixed bottom-5 right-5 z-[90] space-y-2"></div>
 
 <!-- Yapay zeka asistanı -->
 <button onclick="toggleBot()" class="fixed bottom-5 left-5 z-40 w-14 h-14 rounded-full bg-indigo-600 text-2xl shadow-lg">🤖</button>
