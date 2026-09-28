@@ -113,7 +113,9 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div id="a-warn" class="hid bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs rounded-xl p-3">⚠ Sunucu bağlı değil: panel bu tarayıcıda çalışıyor, değişiklikler <b>sadece bu cihazda</b> saklanır. Herkesin aynı siteyi görmesi için Node sunucusunu (server.js) çalıştırın.</div>
 <div class="grid sm:grid-cols-2 gap-3 text-xs">
 <label>Site Adı<input id="a-title" class="i"></label><label>Toplam Stok (R$)<input id="a-stock" type="number" class="i"></label>
-<label>1.000 Robux Fiyatı (TL)<input id="a-rate" type="number" class="i"></label>
+<label>En Düşük Fiyat (TL / 1.000 R$)<input id="a-min" type="number" step="0.01" class="i" oninput="avg()"></label>
+<label>En Yüksek Fiyat (TL / 1.000 R$)<input id="a-max" type="number" step="0.01" class="i" oninput="avg()"></label>
+<div class="sm:col-span-2 bg-gray-900 border border-gray-800 rounded-xl p-3 flex flex-wrap gap-2 justify-between items-center"><span>Ortalama (sitede kullanılan fiyat): <b id="a-avg" class="text-emerald-400 text-lg"></b></span><button class="b" onclick="applyAvgPk()">Paket fiyatlarını ortalamaya göre güncelle</button></div>
 <label>Satış Durumu<select id="a-in" class="i"><option value="1">Satış Açık</option><option value="0">Stok Tükendi</option></select></label>
 <label>Papara No<input id="a-pn" class="i"></label><label>Papara Sahibi<input id="a-ph" class="i"></label>
 <label class="sm:col-span-2">Discord Linki<input id="a-dc" class="i"></label><label class="sm:col-span-2">Duyuru<input id="a-ann" class="i"></label>
@@ -202,15 +204,17 @@ async function lookup(){const c=$('lc').value.trim().toUpperCase();if(!c)return;
 async function login(){const p=$('pin').value.trim();
  try{const r=await api('/api/admin/login','POST',{pin:p});if(!r.ok)return toast('Hatalı PIN!');PIN=p;hide('au');openAdmin()}catch(e){toast(e&&e.error||'Giriş yapılamadı')}}
 async function openAdmin(){
- $('a-title').value=S.siteTitle;$('a-stock').value=S.totalStock;$('a-rate').value=S.rate;$('a-in').value=S.inStock?'1':'0';$('a-pn').value=S.paparaNo;$('a-ph').value=S.paparaHolder;
+ $('a-title').value=S.siteTitle;$('a-stock').value=S.totalStock;$('a-min').value=S.rateMin??S.rate;$('a-max').value=S.rateMax??S.rate;avg();$('a-in').value=S.inStock?'1':'0';$('a-pn').value=S.paparaNo;$('a-ph').value=S.paparaHolder;
  $('a-dc').value=S.discordUrl;$('a-ann').value=S.announcement;$('a-mt').value=S.maintenance?'1':'0';$('a-mtm').value=S.maintenanceMsg;$('a-faq').value=S.faq.map(f=>f.q+' | '+f.a).join('\n');
  $('a-warn').classList.toggle('hid',!!SERVER);$('a-pinw').classList.toggle('hid',!!SERVER);$('a-pin').value=S.adminPin||'8564';drawPk();show('ad');loadOrders()}
+const avg=()=>{const a=+$('a-min').value||0,b=+$('a-max').value||0,v=a&&b?+((a+b)/2).toFixed(2):(a||b||0);$('a-avg').textContent=v.toFixed(2)+' TL / 1.000 R$';return v};
+function applyAvgPk(){const v=avg();if(!v)return toast('Önce en düşük ve en yüksek fiyatı girin');S.packages.forEach(p=>{p.price=+(p.amount*v/1000).toFixed(2)});drawPk();toast('Paket fiyatları güncellendi. Kaydet\'e basmayı unutmayın.')}
 function drawPk(){$('a-pk').innerHTML=S.packages.map((p,i)=>`<div class="grid grid-cols-4 gap-2 items-end text-[10px]"><label>Robux<input type="number" class="i" value="${p.amount}" onchange="S.packages[${i}].amount=+this.value"></label>
  <label>Fiyat TL<input type="number" class="i" value="${p.price}" onchange="S.packages[${i}].price=+this.value"></label><label>Eski Fiyat<input type="number" class="i" value="${p.old}" onchange="S.packages[${i}].old=+this.value"></label>
  <button class="b !bg-red-800" onclick="S.packages.splice(${i},1);drawPk()">Sil</button></div>`).join('')}
 const addPkg=()=>{S.packages.push({id:Date.now(),amount:1000,price:160,old:200});drawPk()};
 async function saveAdmin(){
- Object.assign(S,{siteTitle:$('a-title').value.trim()||'CATA STORE',totalStock:+$('a-stock').value||0,rate:+$('a-rate').value||160,inStock:$('a-in').value==='1',paparaNo:$('a-pn').value.trim(),paparaHolder:$('a-ph').value.trim(),
+ Object.assign(S,{siteTitle:$('a-title').value.trim()||'CATA STORE',totalStock:+$('a-stock').value||0,rateMin:+$('a-min').value||0,rateMax:+$('a-max').value||0,rate:avg()||160,inStock:$('a-in').value==='1',paparaNo:$('a-pn').value.trim(),paparaHolder:$('a-ph').value.trim(),
  discordUrl:$('a-dc').value.trim(),announcement:$('a-ann').value.trim(),maintenance:$('a-mt').value==='1',maintenanceMsg:$('a-mtm').value.trim(),
  faq:$('a-faq').value.split('\n').map(l=>l.split('|')).filter(a=>a[0].trim()).map((a,i)=>({id:i,q:a[0].trim(),a:a.slice(1).join('|').trim()}))});
  if(!SERVER)S.adminPin=$('a-pin').value.trim()||'8564';
