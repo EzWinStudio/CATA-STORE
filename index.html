@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CATA STORE</title><meta name="theme-color" content="#0b0f19">
+<title>CATA STORE</title><meta name="theme-color" content="#0b0f19"><meta name="author" content="EzWin Corporation">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>body{background:#0b0f19;color:#f3f4f6;font-family:Inter,system-ui,sans-serif}
 .g{background:rgba(17,24,39,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08)}
@@ -24,7 +24,7 @@ body{overflow-x:hidden}.blob{position:fixed;border-radius:9999px;filter:blur(90p
 .card:nth-child(2){animation-delay:.08s}.card:nth-child(3){animation-delay:.16s}.card:nth-child(4){animation-delay:.24s}.card:nth-child(5){animation-delay:.32s}
 .b{transition:transform .2s,background .2s}.b:hover:not(:disabled){transform:translateY(-2px)}.b:active{transform:scale(.95)}
 #cb:not(:disabled),.pulse{animation:glow 2s infinite}
-#od>div,#lk>div,#au>div{animation:pop .35s cubic-bezier(.34,1.56,.64,1)}#tc>div{animation:ts .4s ease}
+#od>div,#lk>div,#au>div,#pp>div,#tos>div{animation:pop .35s cubic-bezier(.34,1.56,.64,1)}#tc>div{animation:ts .4s ease}
 .stat{transition:transform .3s}.stat:hover{transform:translateY(-4px)}
 .bar{background:linear-gradient(90deg,#6366f1,#10b981,#6366f1);background-size:200% 100%;animation:sh 3s linear infinite;transition:width 1s ease}
 .b{box-shadow:0 6px 18px -8px rgba(99,102,241,.7)}
@@ -46,9 +46,9 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
 <div class="blob w-96 h-96 bg-indigo-600/30 -top-20 -left-20"></div><div class="blob w-96 h-96 bg-emerald-500/20 bottom-0 -right-20" style="animation-delay:3s"></div>
 <section class="g rounded-3xl p-8 sm:p-12 text-center hero space-y-5 relative overflow-hidden">
-<div class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">🛡 %100 Güvenli & Anında Gamepass Teslimatı</div>
+<div class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">🛡 %100 Güvenli & Komisyonsuz Grup Ödemesi ile Teslimat</div>
 <h1 class="text-4xl sm:text-6xl font-black leading-tight">En Uygun Fiyatlarla<br><span class="gt">Robux Satın Alın</span></h1>
-<p class="text-gray-400 text-sm max-w-xl mx-auto">Gamepass ile ban riski olmadan güvenli teslimat. Ödeme: Papara veya Discord.</p>
+<p class="text-gray-400 text-sm max-w-xl mx-auto">Robux grup ödemesi ile gönderilir, Roblox komisyonu kesilmez: verdiğin miktarın tamamı hesabına geçer. Ödeme: Papara veya Discord.</p>
 <div class="grid grid-cols-3 gap-3 max-w-xl mx-auto">
 <div class="stat bg-gray-900/70 border border-gray-800 rounded-2xl p-3"><div class="text-2xl font-black text-indigo-400">5-15 Dk</div><div class="text-[11px] text-gray-400">Ort. Teslimat</div></div>
 <div class="stat bg-gray-900/70 border border-gray-800 rounded-2xl p-3"><div class="text-2xl font-black text-emerald-400">+<span data-count="10000">0</span></div><div class="text-[11px] text-gray-400">Başarılı Sipariş</div></div>
@@ -64,19 +64,19 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div class="flex flex-wrap gap-2"><button class="b !bg-gray-800" onclick="setA(400)">400</button><button class="b !bg-gray-800" onclick="setA(1000)">1.000</button><button class="b !bg-gray-800" onclick="setA(2000)">2.000</button><button class="b !bg-gray-800" onclick="setA(5000)">5.000</button></div></div>
 <div class="bg-gray-950 rounded-2xl p-5 space-y-2 text-sm">
 <div class="flex justify-between"><span>Net Robux</span><b id="cn" class="text-emerald-400"></b></div>
-<div class="flex justify-between"><span>Açılacak Gamepass (%30 kesinti dahil)</span><b id="cg" class="text-amber-400"></b></div>
+<div class="flex justify-between"><span>Hesabına Geçecek (kesinti yok)</span><b id="cg" class="text-amber-400"></b></div>
 <div class="flex justify-between items-center pt-2 border-t border-gray-800"><b id="cp" class="text-3xl"></b><button id="cb" class="b" onclick="buyCalc()">Satın Al →</button></div></div></section>
 
 <section class="rv"><h2 class="h2 mb-5">Popüler Robux Paketleri</h2><div id="pk" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4"></div></section>
 <section class="rv"><h2 class="h2 mb-5">Nasıl Robux Satın Alınır?</h2><div class="grid md:grid-cols-3 gap-4">
 <div class="g tr rounded-2xl p-5 space-y-2"><div class="num">1</div><b>Miktarı Seç</b><p class="text-xs text-gray-400">Hesaplayıcı veya hazır paketlerden dilediğin Robux miktarını seç.</p></div>
-<div class="g tr rounded-2xl p-5 space-y-2"><div class="num">2</div><b>Gamepass Oluştur</b><p class="text-xs text-gray-400">Sistemin gösterdiği tutarda bir Roblox Gamepass oluştur.</p></div>
+<div class="g tr rounded-2xl p-5 space-y-2"><div class="num">2</div><b>Kullanıcı Adını Yaz</b><p class="text-xs text-gray-400">Robux grup ödemesiyle hesabına gönderilir. Roblox komisyonu kesilmez.</p></div>
 <div class="g tr rounded-2xl p-5 space-y-2"><div class="num">3</div><b>Öde & Teslim Al</b><p class="text-xs text-gray-400">Papara veya Discord ile ödemeni tamamla, Robux hesabına gelsin.</p></div></div></section>
 <section class="rv max-w-3xl mx-auto space-y-2"><h2 class="h2 mb-3">Sıkça Sorulan Sorular</h2><div id="faq" class="space-y-2"></div></section>
 </main>
 <footer class="border-t border-gray-800 bg-gray-950/80 mt-10"><div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-<b class="text-white text-base">⚡ <span id="ft"></span></b><div class="flex gap-5"><a href="#" class="hover:text-white">Anasayfa</a><a href="#pk" class="hover:text-white">Paketler</a><a id="dc3" target="_blank" rel="noopener" class="text-indigo-400 hover:text-indigo-300">Discord Destek</a></div>
-<p>© 2026 Tüm hakları saklıdır. Roblox Corporation ile resmi bağı yoktur.</p></div></footer>
+<b class="text-white text-base">⚡ <span id="ft"></span></b><div class="flex flex-wrap justify-center gap-5"><a href="#" class="hover:text-white">Anasayfa</a><a href="#pk" class="hover:text-white">Paketler</a><a onclick="show('tos')" class="hover:text-white cursor-pointer">Kullanım Şartları</a><a onclick="show('pp')" class="hover:text-white cursor-pointer">Gizlilik Politikası</a><a id="dc3" target="_blank" rel="noopener" class="text-indigo-400 hover:text-indigo-300">Discord Destek</a></div>
+<div class="text-center md:text-right space-y-1"><p>© 2026 <span class="sn"></span>. Tüm hakları saklıdır. Roblox Corporation ile resmi bağı yoktur.</p><p>Bu site <b class="text-gray-300">EzWin Corporation</b> tarafından geliştirilmiştir.</p></div></div></footer>
 
 <div id="mt" class="hid fixed inset-0 z-[60] bg-gray-950 flex items-center justify-center p-6 text-center"><div class="g rounded-3xl p-8 max-w-md space-y-3"><div class="text-4xl">🛠</div><h2 class="text-xl font-bold">Site Bakımda</h2><p id="mtm" class="text-sm text-gray-400"></p><button class="text-xs text-gray-500 underline" onclick="show('au')">Yönetici Girişi</button></div></div>
 
@@ -90,6 +90,7 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div class="grid grid-cols-2 gap-2 text-xs font-bold">
 <label class="p-2.5 rounded-xl border border-gray-700 flex gap-2"><input type="radio" name="pm" value="Papara" checked>💳 Papara</label>
 <label class="p-2.5 rounded-xl border border-gray-700 flex gap-2"><input type="radio" name="pm" value="Discord">💬 Discord</label></div>
+<label class="flex items-start gap-2 text-[11px] text-gray-400"><input id="ack" type="checkbox" class="mt-0.5"><span><a onclick="show('tos')" class="underline cursor-pointer text-indigo-300">Kullanım Şartları</a> ve <a onclick="show('pp')" class="underline cursor-pointer text-indigo-300">Gizlilik Politikası</a>'nı okudum, kabul ediyorum.</span></label>
 <button id="sb" class="b w-full" onclick="submitOrder()">Siparişi Oluştur & Kodu Al</button></div>
 <div id="s2" class="hid space-y-2.5 text-sm">
 <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 text-center"><b>✅ Siparişiniz oluşturuldu!</b></div>
@@ -98,6 +99,7 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div class="flex justify-between items-center"><b id="pn" class="text-emerald-400 tracking-widest"></b><button class="b !py-1 !bg-emerald-600" onclick="cp(pn.innerText)">Kopyala</button></div>
 <p class="text-[11px] text-amber-300">⚠ Papara açıklamasına sipariş kodunuzu yazın.</p></div>
 <p id="dm" class="hid text-xs text-gray-300 bg-gray-900 rounded-xl p-3">Discord üzerinden yetkiliye sipariş kodunuzu iletin, ödeme bilgisi orada verilecektir.</p>
+<a id="gr2" target="_blank" rel="noopener" class="hid b block text-center !bg-emerald-700">Roblox Grubuna Katıl</a>
 <a id="dc2" target="_blank" rel="noopener" class="b block text-center">Discord'a Git & Dekont Gönder</a></div></div></div>
 
 <div id="lk" class="hid fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"><div class="g w-full max-w-xs rounded-2xl p-5 space-y-3">
@@ -120,7 +122,7 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div class="sm:col-span-2 bg-gray-900 border border-gray-800 rounded-xl p-3 space-y-2"><div class="text-gray-400">Örnek fiyatlar (arası otomatik hesaplanır):</div><div id="a-avg" class="text-sm"></div><button class="b" onclick="applyAvgPk()">Paket fiyatlarını bu hesaba göre güncelle</button></div>
 <label>Satış Durumu<select id="a-in" class="i"><option value="1">Satış Açık</option><option value="0">Stok Tükendi</option></select></label>
 <label>Papara No<input id="a-pn" class="i"></label><label>Papara Sahibi<input id="a-ph" class="i"></label>
-<label class="sm:col-span-2">Discord Linki<input id="a-dc" class="i"></label><label class="sm:col-span-2">Duyuru<input id="a-ann" class="i"></label>
+<label class="sm:col-span-2">Discord Linki<input id="a-dc" class="i"></label><label class="sm:col-span-2">Roblox Grup Linki (isteğe bağlı)<input id="a-gr" class="i" placeholder="https://www.roblox.com/communities/..."></label><label class="sm:col-span-2">Duyuru<input id="a-ann" class="i"></label>
 <label id="a-pinw" class="hid">Yönetici PIN (sadece sunucusuz mod)<input id="a-pin" class="i"></label>
 <label>Bakım Modu<select id="a-mt" class="i"><option value="0">Kapalı</option><option value="1">Açık</option></select></label><label>Bakım Mesajı<input id="a-mtm" class="i"></label>
 <label class="sm:col-span-2">SSS (her satır: soru | cevap)<textarea id="a-faq" rows="5" class="i"></textarea></label></div>
@@ -128,6 +130,12 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div><div class="flex justify-between mb-2"><b class="text-sm">Siparişler</b><button class="b !bg-red-800" onclick="clearOrders()">Tümünü Sil</button></div>
 <div class="overflow-x-auto"><table class="w-full text-xs text-left"><tbody id="a-od" class="divide-y divide-gray-800"></tbody></table></div></div></div></div>
 
+<div id="pp" class="hid fixed inset-0 z-[80] bg-black/80 flex items-center justify-center p-3" onclick="if(event.target===this)hide('pp')"><div class="g w-full max-w-2xl rounded-2xl p-6 max-h-[90vh] overflow-y-auto space-y-3 text-sm text-gray-300 leading-relaxed relative">
+<button class="absolute top-3 right-4 text-gray-400 hover:text-white" onclick="hide('pp')">✕</button><h3 class="text-xl font-bold text-white pr-6">Gizlilik Politikası</h3><p class="text-[11px] text-gray-500">Son güncelleme: 28 Eylül 2026</p><h4 class="font-bold text-white pt-2">1. Genel</h4><p><span class="sn"></span> ("Site"), EzWin Corporation tarafından geliştirilmiştir. Bu politika, Siteyi kullanırken hangi kişisel verilerin işlendiğini ve nasıl korunduğunu açıklar. Veri sorumlusu Site işletmecisidir; iletişim için Discord destek sunucumuzu kullanabilirsiniz.</p><h4 class="font-bold text-white pt-2">2. Topladığımız veriler</h4><p>Sipariş sırasında Roblox kullanıcı adınız, sipariş bilgileri (Robux miktarı, tutar, ödeme yöntemi, sipariş kodu, tarih) ve sunucu kayıtlarında tutulabilen teknik veriler (IP adresi, tarayıcı bilgisi) işlenir. Ödeme Papara veya Discord üzerinden yapıldığı için banka/kart bilgileriniz Sitede toplanmaz. <b>Roblox şifreniz hiçbir zaman istenmez.</b></p><h4 class="font-bold text-white pt-2">3. İşleme amaçları</h4><p>Verileriniz siparişinizi oluşturmak ve teslim etmek, ödemeyi doğrulamak, müşteri desteği sağlamak, dolandırıcılığı ve kötüye kullanımı önlemek ve yasal yükümlülükleri yerine getirmek amacıyla işlenir.</p><h4 class="font-bold text-white pt-2">4. Paylaşım</h4><p>Verileriniz satılmaz. Yeni sipariş bildirimleri, siparişin işlenmesi için Discord sunucusundaki yetkililere iletilir. Ödeme yöntemi olarak seçtiğiniz hizmet sağlayıcıları (Papara, Discord) kendi politikalarına tabidir. Yasal bir talep olması halinde yetkili makamlarla paylaşım yapılabilir.</p><h4 class="font-bold text-white pt-2">5. Saklama süresi</h4><p>Sipariş kayıtları, hizmetin sunulması ve yasal saklama yükümlülükleri için gerekli süre boyunca tutulur; süre dolunca silinir veya anonim hale getirilir.</p><h4 class="font-bold text-white pt-2">6. Çerezler ve depolama</h4><p>Site reklam veya izleme çerezi kullanmaz. Tarayıcı depolaması yalnızca Sitenin çalışması için gerekli olduğunda kullanılır. Sayfa, tasarım bileşenlerini üçüncü taraf içerik ağlarından (CDN) yükleyebilir.</p><h4 class="font-bold text-white pt-2">7. Haklarınız</h4><p>6698 sayılı KVKK kapsamında verilerinizin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltilmesini veya silinmesini isteme ve işlemeye itiraz etme haklarına sahipsiniz. Başvurularınızı Discord destek sunucumuz üzerinden iletebilirsiniz.</p><h4 class="font-bold text-white pt-2">8. Güvenlik ve değişiklikler</h4><p>Verilerinizi korumak için makul teknik ve idari önlemler alınır. Bu politika zaman zaman güncellenebilir; güncel sürüm bu sayfada yayımlanır.</p>
+<button class="b w-full" onclick="hide('pp')">Kapat</button></div></div>
+<div id="tos" class="hid fixed inset-0 z-[80] bg-black/80 flex items-center justify-center p-3" onclick="if(event.target===this)hide('tos')"><div class="g w-full max-w-2xl rounded-2xl p-6 max-h-[90vh] overflow-y-auto space-y-3 text-sm text-gray-300 leading-relaxed relative">
+<button class="absolute top-3 right-4 text-gray-400 hover:text-white" onclick="hide('tos')">✕</button><h3 class="text-xl font-bold text-white pr-6">Kullanım Şartları</h3><p class="text-[11px] text-gray-500">Son güncelleme: 28 Eylül 2026</p><h4 class="font-bold text-white pt-2">1. Kapsam</h4><p>Siteyi kullanarak bu şartları kabul etmiş olursunuz. Site, EzWin Corporation tarafından geliştirilmiştir. Site, Roblox Corporation ile bağlantılı, onun tarafından onaylanmış veya desteklenmiş değildir. Roblox ve Robux, Roblox Corporation'ın markalarıdır.</p><h4 class="font-bold text-white pt-2">2. Hizmet</h4><p>Robux, Roblox grup ödemesi yöntemiyle hesabınıza gönderilir; bu yöntemde Roblox komisyonu kesilmez. Ödemenin yapılabilmesi için hesabınızın grubumuza üye olması gerekir. Belirtilen teslimat süreleri tahminidir, garanti değildir.</p><h4 class="font-bold text-white pt-2">3. Sipariş ve ödeme</h4><p>Ödeme yalnızca Papara veya Discord üzerinden kabul edilir. Sipariş sonrası verilen sipariş kodunu ödeme açıklamasına yazmalı ve gerekirse dekontu Discord üzerinden iletmelisiniz. Teslimat, ödeme doğrulandıktan sonra yapılır. Sipariş anında ekranda görünen fiyat geçerlidir; fiyatlar önceden haber verilmeden değişebilir.</p><h4 class="font-bold text-white pt-2">4. Kullanıcı yükümlülükleri</h4><p>Doğru Roblox kullanıcı adını girmekten siz sorumlusunuz; hatalı kullanıcı adına yapılan teslimattan Site sorumlu tutulamaz. Çalıntı/hileli ödeme kullanmak, Siteyi kötüye kullanmak veya yasa dışı amaçlarla kullanmak yasaktır; bu durumda siparişler iptal edilebilir.</p><h4 class="font-bold text-white pt-2">5. İptal ve iade</h4><p>Teslimat yapılmadan önce Discord üzerinden iptal talep edebilirsiniz. Tek seferde ifa edilen dijital hizmet niteliğindeki teslim edilmiş siparişler iade edilmez. Eksik veya hatalı teslimat durumunda lütfen sipariş kodunuzla destek ekibine başvurun.</p><h4 class="font-bold text-white pt-2">6. Sorumluluk sınırı</h4><p>Roblox'un kural veya sistem değişiklikleri, hesap kısıtlamaları, kesintiler ve mücbir sebeplerden doğan gecikme ve zararlardan Site sorumlu değildir. Site "olduğu gibi" sunulur.</p><h4 class="font-bold text-white pt-2">7. Değişiklikler ve uygulanacak hukuk</h4><p>Şartlar önceden haber verilmeksizin güncellenebilir; güncel sürüm bu sayfada yayımlanır. Bu şartlara Türkiye Cumhuriyeti hukuku uygulanır.</p>
+<button class="b w-full" onclick="hide('tos')">Kapat</button></div></div>
 <div id="tc" class="fixed bottom-5 right-5 z-[90] space-y-2"></div>
 
 <!-- Yapay zeka asistanı -->
@@ -137,9 +145,9 @@ input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .
 <div class="p-2 flex gap-2 border-t border-gray-800"><input id="bi" class="i !py-1.5 text-xs" placeholder="Bir soru yazın..." onkeydown="if(event.key==='Enter')botSend()"><button class="b" onclick="botSend()">➤</button></div></div>
 
 <script>
-const D={siteTitle:'CATA STORE',announcement:'🔥 Teslimatlar 7/24 devam etmektedir.',discordUrl:'https://discord.gg/M2hAX9PFf8',paparaNo:'1234567890',paparaHolder:'CATA STORE',totalStock:75000,rate:160,minAmt:100,minPrice:30,maxAmt:10000,maxPrice:1600,inStock:true,maintenance:false,maintenanceMsg:'Sitemiz şu anda bakımda. Kısa süre içinde tekrar hizmetinizdeyiz.',
+const D={siteTitle:'CATA STORE',announcement:'🔥 Teslimatlar 7/24 devam etmektedir.',discordUrl:'https://discord.gg/M2hAX9PFf8',paparaNo:'1234567890',paparaHolder:'CATA STORE',totalStock:75000,rate:160,minAmt:100,minPrice:30,maxAmt:10000,maxPrice:1600,groupUrl:'',inStock:true,maintenance:false,maintenanceMsg:'Sitemiz şu anda bakımda. Kısa süre içinde tekrar hizmetinizdeyiz.',
 packages:[{id:1,amount:400,price:64,old:80},{id:2,amount:800,price:128,old:160},{id:3,amount:2000,price:320,old:400},{id:4,amount:4500,price:720,old:900},{id:5,amount:10000,price:1600,old:2000}],
-faq:[{q:'Robux teslimatı ne kadar sürer?',a:'Ödeme onaylandıktan sonra ortalama 5-15 dakika. Gamepass Robux\'ları Roblox politikası gereği 3-5 gün "Pending" görünür.'},{q:'Gamepass nasıl oluşturulur?',a:'create.roblox.com > Passes bölümünden yeni pass oluşturup sipariş özetindeki tutarda fiyatlandırın ve satışa açın.'},{q:'Şifremi vermem gerekiyor mu?',a:'Hayır! Şifreniz hiçbir zaman istenmez.'}]};
+faq:[{q:'Robux teslimatı nasıl yapılıyor?',a:'Robux, Roblox grup ödemesi ile hesabınıza gönderilir. Bu yöntemde %30 Roblox komisyonu kesilmez, sipariş ettiğiniz miktarın tamamını alırsınız. Ödeme onaylandıktan sonra ortalama 5-15 dakikada teslim edilir.'},{q:'Grup ödemesi için ne yapmam gerekiyor?',a:'Roblox kuralları gereği ödemenin gönderilebilmesi için hesabınızın grubumuza üye olması gerekir. Sipariş sonrası Discord üzerinden yetkiliye sipariş kodunuzu iletin, grup bilgisi orada paylaşılır.'},{q:'Şifremi vermem gerekiyor mu?',a:'Hayır! Şifreniz hiçbir zaman istenmez.'}]};
 let S={...D},PIN='',sel=null,busy=false;
 // Fiyat: en düşük miktar (ör. 100 R$) en düşük fiyata, en yüksek miktar en yüksek fiyata denk gelir; arası doğrusal hesaplanır
 const pf=(a,A,P,B,Q)=>{a=Math.max(a,A);return B>A&&P&&Q?+(P+(a-A)*(Q-P)/(B-A)).toFixed(2):null};
@@ -174,8 +182,8 @@ function lapi(p,m,b){p=p.replace(/^\//,'');b=b||{};const st=LS('cata_state'),od=
 function cp(t){navigator.clipboard?.writeText(t).then(()=>toast('Kopyalandı!'),()=>toast('Kopyalanamadı'))}
 
 function render(){
- $('title').textContent=S.siteTitle;$('ft').textContent=S.siteTitle;document.title=S.siteTitle;$('ann').textContent=S.announcement;
- $('dc').href=S.discordUrl;$('hs').textContent=n(S.totalStock);const pc=Math.min(100,Math.max(5,Math.round(S.totalStock/1000)));$('hb').style.width=pc+'%';$('hbp').textContent=pc+'% dolu';$('dc2').href=S.discordUrl;$('dc3').href=S.discordUrl;$('stk').textContent=n(S.totalStock)+' R$';
+ $('title').textContent=S.siteTitle;$('ft').textContent=S.siteTitle;document.querySelectorAll('.sn').forEach(e=>e.textContent=S.siteTitle);document.title=S.siteTitle;$('ann').textContent=S.announcement;
+ $('dc').href=S.discordUrl;$('hs').textContent=n(S.totalStock);const pc=Math.min(100,Math.max(5,Math.round(S.totalStock/1000)));$('hb').style.width=pc+'%';$('hbp').textContent=pc+'% dolu';$('dc2').href=S.discordUrl;$('dc3').href=S.discordUrl;const gok=/^https?:\/\//.test(S.groupUrl||'');$('gr2').href=gok?S.groupUrl:'#';$('gr2').classList.toggle('hid',!gok);$('stk').textContent=n(S.totalStock)+' R$';
  $('mt').classList.toggle('hid',!S.maintenance);$('mtm').textContent=S.maintenanceMsg;
  const open=S.inStock&&S.totalStock>0;
  $('pk').innerHTML=S.packages.map((p,i)=>{const off=!open||p.amount>S.totalStock,d=p.old>p.price?Math.round((p.old-p.price)/p.old*100):0;
@@ -185,15 +193,16 @@ function render(){
  $('faq').innerHTML=S.faq.map((f,i)=>`<div class="g rounded-xl"><button class="w-full text-left px-4 py-3 font-semibold text-sm" onclick="this.nextElementSibling.classList.toggle('hid')">${esc(f.q)}</button><div class="hid px-4 pb-3 text-xs text-gray-400">${esc(f.a)}</div></div>`).join('');
  calc()}
 function calc(){const a=Math.max(100,parseInt($('amt').value)||100),open=S.inStock&&S.totalStock>0&&a<=S.totalStock;
- $('rg').value=Math.min(a,10000);$('cn').textContent=n(a)+' R$';$('cg').textContent=n(Math.ceil(a/.7))+' R$';$('cp').textContent=priceFor(a).toFixed(2)+' TL';$('cb').disabled=!open}
+ $('rg').value=Math.min(a,10000);$('cn').textContent=n(a)+' R$';$('cg').textContent=n(a)+' R$';$('cp').textContent=priceFor(a).toFixed(2)+' TL';$('cb').disabled=!open}
 const setA=v=>{$('amt').value=v;calc()};
 const buyCalc=()=>{const a=Math.max(100,parseInt($('amt').value)||100);buy(a,priceFor(a))};
-function buy(r,p){sel={robux:r,price:p};$('or').textContent=n(r)+' Robux';$('og').textContent='Açılacak Gamepass: '+n(Math.ceil(r/.7))+' R$';$('op').textContent=Number(p).toFixed(2)+' TL';
- $('s1').classList.remove('hid');$('s2').classList.add('hid');$('un').value='';show('od')}
+function buy(r,p){sel={robux:r,price:p};$('or').textContent=n(r)+' Robux';$('og').textContent='Grup ödemesi ile teslim • Komisyon kesilmez';$('op').textContent=Number(p).toFixed(2)+' TL';
+ $('s1').classList.remove('hid');$('s2').classList.add('hid');$('un').value='';$('ack').checked=false;show('od')}
 
 async function submitOrder(){
  if(busy)return;const u=$('un').value.trim();
  if(!/^[A-Za-z0-9_]{3,20}$/.test(u)||u.startsWith('_')||u.endsWith('_'))return toast('Geçersiz Roblox kullanıcı adı (3-20 karakter, harf/rakam/_)');
+ if(!$('ack').checked)return toast('Devam etmek için Kullanım Şartları ve Gizlilik Politikası\'nı kabul etmelisiniz');
  const pm=document.querySelector('input[name=pm]:checked').value;busy=true;$('sb').disabled=true;$('sb').textContent='İşleniyor...';
  try{const r=await api('/api/orders','POST',{username:u,robux:sel.robux,paymentMethod:pm});
   $('op').textContent=Number(r.price).toFixed(2)+' TL';$('oc').textContent=r.id;$('pn').textContent=S.paparaNo;$('ph').textContent=S.paparaHolder;
@@ -210,7 +219,7 @@ async function login(){const p=$('pin').value.trim();
  try{const r=await api('/api/admin/login','POST',{pin:p});if(!r.ok)return toast('Hatalı PIN!');PIN=p;hide('au');openAdmin()}catch(e){toast(e&&e.error||'Giriş yapılamadı')}}
 async function openAdmin(){
  $('a-title').value=S.siteTitle;$('a-stock').value=S.totalStock;$('a-mina').value=S.minAmt;$('a-min').value=S.minPrice;$('a-maxa').value=S.maxAmt;$('a-max').value=S.maxPrice;avg();$('a-in').value=S.inStock?'1':'0';$('a-pn').value=S.paparaNo;$('a-ph').value=S.paparaHolder;
- $('a-dc').value=S.discordUrl;$('a-ann').value=S.announcement;$('a-mt').value=S.maintenance?'1':'0';$('a-mtm').value=S.maintenanceMsg;$('a-faq').value=S.faq.map(f=>f.q+' | '+f.a).join('\n');
+ $('a-dc').value=S.discordUrl;$('a-gr').value=S.groupUrl||'';$('a-ann').value=S.announcement;$('a-mt').value=S.maintenance?'1':'0';$('a-mtm').value=S.maintenanceMsg;$('a-faq').value=S.faq.map(f=>f.q+' | '+f.a).join('\n');
  $('a-warn').classList.toggle('hid',!!SERVER);$('a-pinw').classList.toggle('hid',!!SERVER);$('a-pin').value=S.adminPin||'8564';drawPk();show('ad');loadOrders()}
 const avg=()=>{const A=+$('a-mina').value||100,P=+$('a-min').value||0,B=+$('a-maxa').value||10000,Q=+$('a-max').value||0,f=a=>pf(a,A,P,B,Q);
  $('a-avg').innerHTML=f(A)?[A,1000,B].filter((v,i,a)=>a.indexOf(v)===i).map(a=>n(a)+' R$ = <b class="text-emerald-400">'+f(a).toFixed(2)+' TL</b>').join(' &nbsp;•&nbsp; '):'Fiyatları girin';return f};
@@ -221,7 +230,7 @@ function drawPk(){$('a-pk').innerHTML=S.packages.map((p,i)=>`<div class="grid gr
 const addPkg=()=>{S.packages.push({id:Date.now(),amount:1000,price:160,old:200});drawPk()};
 async function saveAdmin(){
  Object.assign(S,{siteTitle:$('a-title').value.trim()||'CATA STORE',totalStock:+$('a-stock').value||0,minAmt:+$('a-mina').value||100,minPrice:+$('a-min').value||0,maxAmt:+$('a-maxa').value||10000,maxPrice:+$('a-max').value||0,inStock:$('a-in').value==='1',paparaNo:$('a-pn').value.trim(),paparaHolder:$('a-ph').value.trim(),
- discordUrl:$('a-dc').value.trim(),announcement:$('a-ann').value.trim(),maintenance:$('a-mt').value==='1',maintenanceMsg:$('a-mtm').value.trim(),
+ discordUrl:$('a-dc').value.trim(),groupUrl:$('a-gr').value.trim(),announcement:$('a-ann').value.trim(),maintenance:$('a-mt').value==='1',maintenanceMsg:$('a-mtm').value.trim(),
  faq:$('a-faq').value.split('\n').map(l=>l.split('|')).filter(a=>a[0].trim()).map((a,i)=>({id:i,q:a[0].trim(),a:a.slice(1).join('|').trim()}))});
  if(!SERVER)S.adminPin=$('a-pin').value.trim()||'8564';
  try{await api('/api/state','PUT',S);render();toast('Kaydedildi! Tüm ziyaretçilerde güncellendi.')}catch(e){toast(e.error||'Kaydedilemedi')}}
@@ -231,11 +240,12 @@ async function loadOrders(){try{const o=await api('/api/admin/orders');
 async function setSt(id,s){try{await api('/api/admin/orders/'+id,'PATCH',{status:s});loadOrders()}catch{toast('Hata')}}
 async function clearOrders(){if(confirm('Tüm siparişler silinsin mi?')){await api('/api/admin/orders','DELETE');loadOrders()}}
 
-function toggleBot(){const b=$('bot');b.classList.toggle('hid');if(!b.dataset.i){b.dataset.i=1;bm('Merhaba! Fiyat, stok, teslimat, ödeme veya Gamepass hakkında soru sorabilirsiniz.','b')}}
+function toggleBot(){const b=$('bot');b.classList.toggle('hid');if(!b.dataset.i){b.dataset.i=1;bm('Merhaba! Fiyat, stok, teslimat, ödeme veya grup ödemesi hakkında soru sorabilirsiniz.','b')}}
 function bm(t,w){const d=document.createElement('div');d.className=w==='b'?'bg-gray-800 p-2 rounded-lg mr-6':'bg-indigo-600 p-2 rounded-lg ml-6';d.textContent=t;$('bm').appendChild(d);$('bm').scrollTop=1e9}
 function botSend(){const q=$('bi').value.trim();if(!q)return;$('bi').value='';bm(q,'u');setTimeout(()=>bm(ans(q),'b'),250)}
 function ans(q){const t=q.toLocaleLowerCase('tr-TR'),m=t.replace(/\./g,'').match(/(\d{3,6})/);
- if(m&&/(kaç|fiyat|tl|₺|ne kadar|robux)/.test(t)){const a=+m[1];return `${n(a)} Robux = ${priceFor(a).toFixed(2)} TL. Açmanız gereken Gamepass: ${n(Math.ceil(a/.7))} R$ (%30 kesinti dahil).`}
+ if(m&&/(kaç|fiyat|tl|₺|ne kadar|robux)/.test(t)){const a=+m[1];return `${n(a)} Robux = ${priceFor(a).toFixed(2)} TL. Robux grup ödemesiyle gönderildiği için komisyon kesilmez, ${n(a)} R$'nin tamamı hesabınıza geçer.`}
+ if(/(grup|komisyon|gamepass|kesinti|pass)/.test(t))return 'Robux, grup ödemesi (payout) ile gönderilir. Bu yüzden %30 Roblox komisyonu kesilmez ve Gamepass açmanız gerekmez. Hesabınızın grubumuza üye olması gerekir, ayrıntıyı Discord\'dan yetkiliden alabilirsiniz.';
  if(/stok/.test(t))return S.inStock&&S.totalStock>0?`Şu an ${n(S.totalStock)} R$ stokumuz var.`:'Şu an stok tükendi, daha sonra tekrar bakın.';
  if(/(fiyat|ucuz|birim)/.test(t))return `100 Robux ${priceFor(100).toFixed(2)} TL, 1.000 Robux ${priceFor(1000).toFixed(2)} TL. Hesaplayıcıdan istediğiniz miktarı görebilirsiniz.`;
  if(/(ödeme|papara|discord|nasıl öde)/.test(t))return 'Ödeme sadece Papara veya Discord üzerinden yapılır. Papara açıklamasına sipariş kodunuzu yazın.';
