@@ -12,7 +12,7 @@ const getS = () => { const r = db.prepare("SELECT v FROM kv WHERE k='state'").ge
 const setS = s => db.prepare("INSERT OR REPLACE INTO kv VALUES('state',?)").run(JSON.stringify(s));
 
 app.get('/api/state', (q, s) => s.json(getS()));
-app.post('/api/admin/login', (q, s) => s.json({ ok: q.body.pin === PIN }));
+app.post('/api/admin/login', (q, s) => s.json({ ok: String((q.body && q.body.pin) || '').trim() === String(PIN).trim() }));
 app.put('/api/state', (q, s) => { if (!admin(q)) return s.sendStatus(401); setS(q.body); s.json({ ok: true }); });
 
 app.post('/api/orders', (q, s) => {
@@ -44,4 +44,4 @@ app.patch('/api/admin/orders/:id', (q, s) => {
   const o = JSON.parse(r.data); o.status = q.body.status; db.prepare('UPDATE orders SET data=? WHERE id=?').run(JSON.stringify(o), o.id); s.json(o);
 });
 app.delete('/api/admin/orders', (q, s) => { if (!admin(q)) return s.sendStatus(401); db.exec('DELETE FROM orders'); s.json({ ok: true }); });
-app.listen(process.env.PORT || 3000, () => console.log('CATA STORE çalışıyor'));
+app.listen(process.env.PORT || 3000, () => console.log('CATA STORE çalışıyor -> http://localhost:' + (process.env.PORT || 3000) + ' | Aktif PIN: ' + (process.env.ADMIN_PIN ? '(ADMIN_PIN değişkeninden)' : '8564 (varsayılan)')));
