@@ -27,11 +27,16 @@ body{overflow-x:hidden}.blob{position:fixed;border-radius:9999px;filter:blur(90p
 #od>div,#lk>div,#au>div{animation:pop .35s cubic-bezier(.34,1.56,.64,1)}#tc>div{animation:ts .4s ease}
 .stat{transition:transform .3s}.stat:hover{transform:translateY(-4px)}
 .bar{background:linear-gradient(90deg,#6366f1,#10b981,#6366f1);background-size:200% 100%;animation:sh 3s linear infinite;transition:width 1s ease}
+.b{box-shadow:0 6px 18px -8px rgba(99,102,241,.7)}
+body{background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px}
+.h2{font-size:1.4rem;font-weight:800;display:flex;align-items:center;gap:.6rem}.h2:before{content:'';width:5px;height:1.5rem;border-radius:9px;background:linear-gradient(#6366f1,#10b981)}
+.num{width:2.6rem;height:2.6rem;border-radius:.85rem;display:grid;place-items:center;font-weight:900;font-size:1.1rem;background:linear-gradient(135deg,#6366f1,#10b981)}
+input[type=range]{accent-color:#6366f1;cursor:pointer}.tr{transition:transform .3s,border-color .3s}.tr:hover{transform:translateY(-3px);border-color:rgba(99,102,241,.5)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}</style></head>
 <body>
 <div id="ann" class="bg-indigo-900 text-xs text-center py-2 px-3"></div>
 <header class="g sticky top-0 z-40"><div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-<b id="title" class="text-xl tracking-wider">CATA STORE</b>
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-emerald-400 grid place-items-center text-xl pulse">⚡</div><div><b id="title" class="text-xl tracking-wider block leading-none">CATA STORE</b><span class="text-[10px] text-gray-400 uppercase tracking-widest">Anında Otomatik Teslimat</span></div></div>
 <div class="flex gap-2 text-xs">
 <span class="hidden sm:block px-3 py-2 rounded-xl bg-gray-900 border border-gray-800">Stok: <b id="stk" class="text-emerald-400"></b></span>
 <button class="b !bg-gray-800" onclick="show('lk')">🔍 Sipariş Sorgula</button>
@@ -51,19 +56,27 @@ body{overflow-x:hidden}.blob{position:fixed;border-radius:9999px;filter:blur(90p
 <div class="max-w-xl mx-auto text-left"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>⚡ Canlı Stok: <b id="hs" class="text-emerald-400"></b> R$</span><span id="hbp"></span></div>
 <div class="h-2.5 bg-gray-800 rounded-full overflow-hidden"><div id="hb" class="bar h-full rounded-full" style="width:5%"></div></div></div></section>
 
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-semibold text-center">
+<div class="tr g rounded-2xl p-4">🔒<br>Güvenli Ödeme</div><div class="tr g rounded-2xl p-4">⚡<br>Hızlı Teslimat</div><div class="tr g rounded-2xl p-4">💬<br>7/24 Destek</div><div class="tr g rounded-2xl p-4">🎮<br>Ban Riski Yok</div></div>
 <section class="rv g rounded-3xl p-6 grid md:grid-cols-2 gap-6 items-center">
 <div class="space-y-3"><h2 class="text-xl font-bold">🧮 Robux Hesaplayıcı</h2>
-<input id="amt" type="number" min="100" step="50" value="1000" class="i text-xl font-bold" oninput="calc()">
+<input id="amt" type="number" min="100" step="50" value="1000" class="i text-xl font-bold" oninput="calc()"><input id="rg" type="range" min="100" max="10000" step="100" value="1000" class="w-full" oninput="setA(this.value)">
 <div class="flex flex-wrap gap-2"><button class="b !bg-gray-800" onclick="setA(400)">400</button><button class="b !bg-gray-800" onclick="setA(1000)">1.000</button><button class="b !bg-gray-800" onclick="setA(2000)">2.000</button><button class="b !bg-gray-800" onclick="setA(5000)">5.000</button></div></div>
 <div class="bg-gray-950 rounded-2xl p-5 space-y-2 text-sm">
 <div class="flex justify-between"><span>Net Robux</span><b id="cn" class="text-emerald-400"></b></div>
 <div class="flex justify-between"><span>Açılacak Gamepass (%30 kesinti dahil)</span><b id="cg" class="text-amber-400"></b></div>
 <div class="flex justify-between items-center pt-2 border-t border-gray-800"><b id="cp" class="text-3xl"></b><button id="cb" class="b" onclick="buyCalc()">Satın Al →</button></div></div></section>
 
-<section class="rv"><h2 class="text-xl font-bold mb-4">📦 Popüler Paketler</h2><div id="pk" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4"></div></section>
-<section class="rv max-w-3xl mx-auto space-y-2"><h2 class="text-xl font-bold mb-2">Sıkça Sorulan Sorular</h2><div id="faq" class="space-y-2"></div></section>
+<section class="rv"><h2 class="h2 mb-5">Popüler Robux Paketleri</h2><div id="pk" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4"></div></section>
+<section class="rv"><h2 class="h2 mb-5">Nasıl Robux Satın Alınır?</h2><div class="grid md:grid-cols-3 gap-4">
+<div class="g tr rounded-2xl p-5 space-y-2"><div class="num">1</div><b>Miktarı Seç</b><p class="text-xs text-gray-400">Hesaplayıcı veya hazır paketlerden dilediğin Robux miktarını seç.</p></div>
+<div class="g tr rounded-2xl p-5 space-y-2"><div class="num">2</div><b>Gamepass Oluştur</b><p class="text-xs text-gray-400">Sistemin gösterdiği tutarda bir Roblox Gamepass oluştur.</p></div>
+<div class="g tr rounded-2xl p-5 space-y-2"><div class="num">3</div><b>Öde & Teslim Al</b><p class="text-xs text-gray-400">Papara veya Discord ile ödemeni tamamla, Robux hesabına gelsin.</p></div></div></section>
+<section class="rv max-w-3xl mx-auto space-y-2"><h2 class="h2 mb-3">Sıkça Sorulan Sorular</h2><div id="faq" class="space-y-2"></div></section>
 </main>
-<footer class="text-center text-xs text-gray-500 py-8 border-t border-gray-800">© 2026 <span id="ft"></span>. Roblox Corporation ile resmi bağı yoktur.</footer>
+<footer class="border-t border-gray-800 bg-gray-950/80 mt-10"><div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+<b class="text-white text-base">⚡ <span id="ft"></span></b><div class="flex gap-5"><a href="#" class="hover:text-white">Anasayfa</a><a href="#pk" class="hover:text-white">Paketler</a><a id="dc3" target="_blank" rel="noopener" class="text-indigo-400 hover:text-indigo-300">Discord Destek</a></div>
+<p>© 2026 Tüm hakları saklıdır. Roblox Corporation ile resmi bağı yoktur.</p></div></footer>
 
 <div id="mt" class="hid fixed inset-0 z-[60] bg-gray-950 flex items-center justify-center p-6 text-center"><div class="g rounded-3xl p-8 max-w-md space-y-3"><div class="text-4xl">🛠</div><h2 class="text-xl font-bold">Site Bakımda</h2><p id="mtm" class="text-sm text-gray-400"></p><button class="text-xs text-gray-500 underline" onclick="show('au')">Yönetici Girişi</button></div></div>
 
@@ -97,12 +110,14 @@ body{overflow-x:hidden}.blob{position:fixed;border-radius:9999px;filter:blur(90p
 
 <div id="ad" class="hid fixed inset-0 z-50 bg-gray-950 overflow-y-auto"><div class="max-w-4xl mx-auto p-4 space-y-6">
 <div class="flex justify-between items-center sticky top-0 bg-gray-950 py-2 z-10"><h2 class="font-bold text-lg">Yönetim Paneli</h2><div class="flex gap-2"><button class="b !bg-emerald-600" onclick="saveAdmin()">💾 Kaydet</button><button class="b !bg-gray-800" onclick="hide('ad')">Çıkış</button></div></div>
+<div id="a-warn" class="hid bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs rounded-xl p-3">⚠ Sunucu bağlı değil: panel bu tarayıcıda çalışıyor, değişiklikler <b>sadece bu cihazda</b> saklanır. Herkesin aynı siteyi görmesi için Node sunucusunu (server.js) çalıştırın.</div>
 <div class="grid sm:grid-cols-2 gap-3 text-xs">
 <label>Site Adı<input id="a-title" class="i"></label><label>Toplam Stok (R$)<input id="a-stock" type="number" class="i"></label>
 <label>1.000 Robux Fiyatı (TL)<input id="a-rate" type="number" class="i"></label>
 <label>Satış Durumu<select id="a-in" class="i"><option value="1">Satış Açık</option><option value="0">Stok Tükendi</option></select></label>
 <label>Papara No<input id="a-pn" class="i"></label><label>Papara Sahibi<input id="a-ph" class="i"></label>
 <label class="sm:col-span-2">Discord Linki<input id="a-dc" class="i"></label><label class="sm:col-span-2">Duyuru<input id="a-ann" class="i"></label>
+<label id="a-pinw" class="hid">Yönetici PIN (sadece sunucusuz mod)<input id="a-pin" class="i"></label>
 <label>Bakım Modu<select id="a-mt" class="i"><option value="0">Kapalı</option><option value="1">Açık</option></select></label><label>Bakım Mesajı<input id="a-mtm" class="i"></label>
 <label class="sm:col-span-2">SSS (her satır: soru | cevap)<textarea id="a-faq" rows="5" class="i"></textarea></label></div>
 <div><div class="flex justify-between mb-2"><b class="text-sm">Paketler</b><button class="b" onclick="addPkg()">+ Yeni Paket</button></div><div id="a-pk" class="space-y-2"></div></div>
@@ -125,22 +140,45 @@ let S={...D},PIN='',sel=null,busy=false;
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),n=x=>Number(x).toLocaleString('tr-TR');
 const show=id=>{$(id).classList.remove('hid');if(id==='au'){$('pin').value='';$('pin').focus()}},hide=id=>$(id).classList.add('hid');
 function toast(m){const t=document.createElement('div');t.className='g px-4 py-2 rounded-xl text-xs';t.textContent=m;$('tc').appendChild(t);setTimeout(()=>t.remove(),3000)}
-async function api(p,m='GET',b){const r=await fetch(p,{method:m,headers:{'Content-Type':'application/json','x-admin-pin':PIN},body:b?JSON.stringify(b):undefined});if(!r.ok)throw await r.json().catch(()=>({error:'Hata '+r.status}));return r.json()}
+let SERVER=null;
+async function probe(){try{const r=await fetch('api/state');SERVER=r.ok&&(r.headers.get('content-type')||'').includes('json')}catch{SERVER=false}}
+async function api(p,m='GET',b){
+ if(SERVER===null)await probe();
+ if(!SERVER)return lapi(p,m,b);
+ const r=await fetch(p.replace(/^\//,''),{method:m,headers:{'Content-Type':'application/json','x-admin-pin':PIN},body:b?JSON.stringify(b):undefined});if(!r.ok)throw await r.json().catch(()=>({error:'Hata '+r.status}));return r.json()}
+/*LAPI*/
+const LS=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}},LW=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+function lapi(p,m,b){p=p.replace(/^\//,'');b=b||{};const st=LS('cata_state'),od=LS('cata_orders')||[],pinOk=()=>PIN===String((st&&st.adminPin)||'8564');
+ const bad=e=>Promise.reject({error:e}),ok=v=>Promise.resolve(v);
+ if(p==='api/state'){if(m==='PUT'){if(!pinOk())return bad('Yetkisiz');LW('cata_state',b);return ok({ok:true})}return ok(st)}
+ if(p==='api/admin/login')return ok({ok:String(b.pin||'').trim()===String((st&&st.adminPin)||'8564')});
+ if(p==='api/orders'&&m==='POST'){const t=st||S;if(t.maintenance||!t.inStock)return bad('Satış kapalı');
+  if(!/^[A-Za-z0-9_]{3,20}$/.test(b.username||''))return bad('Geçersiz kullanıcı adı');if(!['Papara','Discord'].includes(b.paymentMethod))return bad('Geçersiz ödeme yöntemi');
+  if(!Number.isInteger(b.robux)||b.robux<100||b.robux>t.totalStock)return bad('Geçersiz miktar / stok yetersiz');
+  const pk=(t.packages||[]).find(x=>x.amount===b.robux),price=pk?pk.price:+(b.robux*t.rate/1000).toFixed(2);let id;do{id='CATA-'+Math.floor(1e4+Math.random()*9e4)}while(od.some(o=>o.id===id));
+  od.unshift({id,date:new Date().toISOString().slice(0,16).replace('T',' '),username:b.username,robux:b.robux,price,paymentMethod:b.paymentMethod,status:'Beklemede'});LW('cata_orders',od);
+  LW('cata_state',{...t,totalStock:t.totalStock-b.robux});return ok({id,price})}
+ let x=p.match(/^api\/orders\/(.+)$/);if(x){const o=od.find(o=>o.id===x[1].toUpperCase());return o?ok({id:o.id,robux:o.robux,price:o.price,status:o.status}):bad('Yok')}
+ if(p.startsWith('api/admin/orders')){if(!pinOk())return bad('Yetkisiz');
+  if(m==='GET')return ok(od);if(m==='DELETE'){LW('cata_orders',[]);return ok({ok:true})}
+  x=p.match(/^api\/admin\/orders\/(.+)$/);const o=x&&od.find(o=>o.id===x[1]);if(!o)return bad('Yok');o.status=b.status;LW('cata_orders',od);return ok(o)}
+ return bad('Bilinmeyen')}
+/*END*/
 function cp(t){navigator.clipboard?.writeText(t).then(()=>toast('Kopyalandı!'),()=>toast('Kopyalanamadı'))}
 
 function render(){
  $('title').textContent=S.siteTitle;$('ft').textContent=S.siteTitle;document.title=S.siteTitle;$('ann').textContent=S.announcement;
- $('dc').href=S.discordUrl;$('hs').textContent=n(S.totalStock);const pc=Math.min(100,Math.max(5,Math.round(S.totalStock/1000)));$('hb').style.width=pc+'%';$('hbp').textContent=pc+'% dolu';$('dc2').href=S.discordUrl;$('stk').textContent=n(S.totalStock)+' R$';
+ $('dc').href=S.discordUrl;$('hs').textContent=n(S.totalStock);const pc=Math.min(100,Math.max(5,Math.round(S.totalStock/1000)));$('hb').style.width=pc+'%';$('hbp').textContent=pc+'% dolu';$('dc2').href=S.discordUrl;$('dc3').href=S.discordUrl;$('stk').textContent=n(S.totalStock)+' R$';
  $('mt').classList.toggle('hid',!S.maintenance);$('mtm').textContent=S.maintenanceMsg;
  const open=S.inStock&&S.totalStock>0;
- $('pk').innerHTML=S.packages.map(p=>{const off=!open||p.amount>S.totalStock,d=p.old>p.price?Math.round((p.old-p.price)/p.old*100):0;
-  return `<div class="g card rounded-2xl p-4 space-y-2"><div class="text-2xl font-black">${n(p.amount)} <span class="text-emerald-400 text-base">R$</span></div>
+ $('pk').innerHTML=S.packages.map((p,i)=>{const off=!open||p.amount>S.totalStock,d=p.old>p.price?Math.round((p.old-p.price)/p.old*100):0;
+  return `<div class="g card relative overflow-hidden rounded-2xl p-4 space-y-2 ${i===1||i===3?'border-indigo-500/60':''}">${i===1||i===3?'<div class="absolute top-0 right-0 bg-indigo-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl">🔥 Popüler</div>':''}<div class="text-2xl font-black">${n(p.amount)} <span class="text-emerald-400 text-base">R$</span></div>
   <div class="text-xs text-gray-400"><s>${p.old} TL</s> ${d?`<b class="text-emerald-400">%${d} indirim</b>`:''}</div><div class="text-lg font-bold">${Number(p.price).toFixed(2)} TL</div>
   <button class="b w-full" ${off?'disabled':''} onclick="buy(${p.amount},${p.price})">${off?'Stok Yok':'Satın Al'}</button></div>`}).join('');
  $('faq').innerHTML=S.faq.map((f,i)=>`<div class="g rounded-xl"><button class="w-full text-left px-4 py-3 font-semibold text-sm" onclick="this.nextElementSibling.classList.toggle('hid')">${esc(f.q)}</button><div class="hid px-4 pb-3 text-xs text-gray-400">${esc(f.a)}</div></div>`).join('');
  calc()}
 function calc(){const a=Math.max(100,parseInt($('amt').value)||100),open=S.inStock&&S.totalStock>0&&a<=S.totalStock;
- $('cn').textContent=n(a)+' R$';$('cg').textContent=n(Math.ceil(a/.7))+' R$';$('cp').textContent=(a*S.rate/1000).toFixed(2)+' TL';$('cb').disabled=!open}
+ $('rg').value=Math.min(a,10000);$('cn').textContent=n(a)+' R$';$('cg').textContent=n(Math.ceil(a/.7))+' R$';$('cp').textContent=(a*S.rate/1000).toFixed(2)+' TL';$('cb').disabled=!open}
 const setA=v=>{$('amt').value=v;calc()};
 const buyCalc=()=>{const a=Math.max(100,parseInt($('amt').value)||100);buy(a,+(a*S.rate/1000).toFixed(2))};
 function buy(r,p){sel={robux:r,price:p};$('or').textContent=n(r)+' Robux';$('og').textContent='Açılacak Gamepass: '+n(Math.ceil(r/.7))+' R$';$('op').textContent=Number(p).toFixed(2)+' TL';
@@ -162,12 +200,11 @@ async function lookup(){const c=$('lc').value.trim().toUpperCase();if(!c)return;
  catch{$('lr').innerHTML='<p class="text-red-400 text-center">Sipariş bulunamadı.</p>'}}
 
 async function login(){const p=$('pin').value.trim();
- if(location.protocol==='file:')return toast('Dosyayı çift tıklayarak açtınız. Önce terminalde "npm start" çalıştırın, sonra tarayıcıda http://localhost:3000 adresini açın.');
- try{const r=await api('/api/admin/login','POST',{pin:p});if(!r.ok)return toast('Hatalı PIN!');PIN=p;hide('au');openAdmin()}catch{toast('Sunucuya ulaşılamadı. Terminalde "npm start" ile sunucunun çalıştığını kontrol edin.')}}
+ try{const r=await api('/api/admin/login','POST',{pin:p});if(!r.ok)return toast('Hatalı PIN!');PIN=p;hide('au');openAdmin()}catch(e){toast(e&&e.error||'Giriş yapılamadı')}}
 async function openAdmin(){
  $('a-title').value=S.siteTitle;$('a-stock').value=S.totalStock;$('a-rate').value=S.rate;$('a-in').value=S.inStock?'1':'0';$('a-pn').value=S.paparaNo;$('a-ph').value=S.paparaHolder;
  $('a-dc').value=S.discordUrl;$('a-ann').value=S.announcement;$('a-mt').value=S.maintenance?'1':'0';$('a-mtm').value=S.maintenanceMsg;$('a-faq').value=S.faq.map(f=>f.q+' | '+f.a).join('\n');
- drawPk();show('ad');loadOrders()}
+ $('a-warn').classList.toggle('hid',!!SERVER);$('a-pinw').classList.toggle('hid',!!SERVER);$('a-pin').value=S.adminPin||'8564';drawPk();show('ad');loadOrders()}
 function drawPk(){$('a-pk').innerHTML=S.packages.map((p,i)=>`<div class="grid grid-cols-4 gap-2 items-end text-[10px]"><label>Robux<input type="number" class="i" value="${p.amount}" onchange="S.packages[${i}].amount=+this.value"></label>
  <label>Fiyat TL<input type="number" class="i" value="${p.price}" onchange="S.packages[${i}].price=+this.value"></label><label>Eski Fiyat<input type="number" class="i" value="${p.old}" onchange="S.packages[${i}].old=+this.value"></label>
  <button class="b !bg-red-800" onclick="S.packages.splice(${i},1);drawPk()">Sil</button></div>`).join('')}
@@ -176,6 +213,7 @@ async function saveAdmin(){
  Object.assign(S,{siteTitle:$('a-title').value.trim()||'CATA STORE',totalStock:+$('a-stock').value||0,rate:+$('a-rate').value||160,inStock:$('a-in').value==='1',paparaNo:$('a-pn').value.trim(),paparaHolder:$('a-ph').value.trim(),
  discordUrl:$('a-dc').value.trim(),announcement:$('a-ann').value.trim(),maintenance:$('a-mt').value==='1',maintenanceMsg:$('a-mtm').value.trim(),
  faq:$('a-faq').value.split('\n').map(l=>l.split('|')).filter(a=>a[0].trim()).map((a,i)=>({id:i,q:a[0].trim(),a:a.slice(1).join('|').trim()}))});
+ if(!SERVER)S.adminPin=$('a-pin').value.trim()||'8564';
  try{await api('/api/state','PUT',S);render();toast('Kaydedildi! Tüm ziyaretçilerde güncellendi.')}catch(e){toast(e.error||'Kaydedilemedi')}}
 async function loadOrders(){try{const o=await api('/api/admin/orders');
  $('a-od').innerHTML=o.length?o.map(x=>`<tr><td class="p-2 font-mono text-amber-400">${esc(x.id)}</td><td class="p-2">${esc(x.date)}</td><td class="p-2 font-bold">${esc(x.username)}</td><td class="p-2">${n(x.robux)} R$</td><td class="p-2">${Number(x.price).toFixed(2)} TL</td><td class="p-2">${esc(x.paymentMethod)}</td><td class="p-2">${esc(x.status)}</td>
@@ -196,7 +234,7 @@ function ans(q){const t=q.toLocaleLowerCase('tr-TR'),r=S.rate/1000,m=t.replace(/
  const w=t.split(/\s+/).filter(x=>x.length>3);let best=null,sc=0;S.faq.forEach(f=>{const s=w.filter(x=>(f.q+' '+f.a).toLocaleLowerCase('tr-TR').includes(x)).length;if(s>sc){sc=s;best=f}});
  return best?best.a:'Bunu tam anlayamadım. Discord üzerinden yetkililere ulaşabilirsiniz.'}
 
-async function load(){try{const s=await api('/api/state');S={...D,...(s||{})}}catch{S={...D}}render()}
+async function load(){if(SERVER===null)await probe();try{const s=await api('/api/state');S={...D,...(s||{})}}catch{S={...D}}render()}
 function initFx(){const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.1});document.querySelectorAll('.rv').forEach(el=>io.observe(el));
  document.querySelectorAll('[data-count]').forEach(el=>{const t=+el.dataset.count,st=performance.now();(function f(now){const k=Math.min(1,(now-st)/1800);el.textContent=n(Math.round(t*(1-Math.pow(1-k,3))));if(k<1)requestAnimationFrame(f)})(st)})}
 initFx();load();setInterval(()=>{if($('ad').classList.contains('hid')&&$('od').classList.contains('hid'))load()},30000);
