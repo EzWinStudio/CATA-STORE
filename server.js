@@ -38,8 +38,8 @@ app.post('/api/orders', (q, s) => {
   if (!['Papara', 'Discord'].includes(paymentMethod)) return s.status(400).json({ error: 'Geçersiz ödeme yöntemi' });
   if (!Number.isInteger(robux) || robux < 100 || robux > st.totalStock) return s.status(400).json({ error: 'Geçersiz miktar / stok yetersiz' });
   const pkg = (st.packages || []).find(p => p.amount === robux);
-  const A = st.minAmt || 100, B = st.maxAmt || 10000, P = st.minPrice, Q = st.maxPrice;
-  const price = pkg ? pkg.price : (P && Q && B > A ? +(P + (Math.max(robux, A) - A) * (Q - P) / (B - A)).toFixed(2) : +(robux * st.rate / 1000).toFixed(2));
+  if (!pkg) return s.status(400).json({ error: 'Geçersiz paket' });
+  const price = pkg.price;
   let id; do { id = 'CATA-' + Math.floor(10000 + Math.random() * 90000); } while (DB.orders.some(o => o.id === id));
   const o = { id, date: new Date().toISOString().slice(0, 16).replace('T', ' '), username, robux, price, paymentMethod, status: 'Beklemede' };
   DB.orders.unshift(o); st.totalStock -= robux; save();
